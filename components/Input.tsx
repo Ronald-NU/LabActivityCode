@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TextInput, View } from 'react-native';
 
 const Input = () => {
-    const [text, setText] = useState('');
+    const [text, setText] = useState<string>('');
 
     return(
         <View>
