@@ -5,7 +5,7 @@ type HeaderProps = {
 
 }
 
-const Header:React.FC<HeaderProps> = ({appName}) => {
+const Header = ({appName } : HeaderProps) => {
     return(
         <View>
             <Text>Welcome to {appName}</Text>
