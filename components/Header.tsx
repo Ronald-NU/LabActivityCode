@@ -1,8 +1,7 @@
 import { Text, View } from 'react-native';
 
-type HeaderProps = {
-    appName: string
-
+interface HeaderProps {
+    appName: string;
 }
 
 const Header = ({appName } : HeaderProps) => {
