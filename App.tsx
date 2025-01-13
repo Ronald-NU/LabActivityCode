@@ -5,7 +5,7 @@ import Input from './components/Input';
 
 export default function App() {
 
-  var appName = "Lab Activity Code";
+  const appName = "Lab Activity Code";
 
   return (
     <View style={styles.container}>
