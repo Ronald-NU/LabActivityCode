@@ -4,7 +4,7 @@ interface HeaderProps {
     appName: string;
 }
 
-const Header = ({appName } : HeaderProps) => {
+const Header = ({appName} : HeaderProps) => {
     return(
         <View>
             <Text>Welcome to {appName}</Text>

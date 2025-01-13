@@ -6,7 +6,11 @@ const Input = () => {
 
     return(
         <View>
-            <TextInput placeholder='Enter Text' style={{height:40}} value={text} onChangeText={text => setText(text)}/>
+            <TextInput 
+                placeholder='Enter Text' 
+                style={{height:40}} 
+                value={text} 
+                onChangeText={text => setText(text)}/>
         </View>
     )
 }
