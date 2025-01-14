@@ -16,6 +16,7 @@ const Input = ({focusOnRender}: InputProps) => {
     //Function to handle onBlur event
     const OnInputBlur = () => {
         setIsFocused(false);
+        setHasTyped(false);
         setHasBlurred(true);
         if(text.length<3){
             setMessage("Please type more than 3 characters");
