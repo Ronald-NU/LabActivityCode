@@ -5,6 +5,7 @@ import { TextInput, View, Text } from 'react-native';
 interface InputProps {
     focusOnRender: boolean;
 }
+
 const Input = ({focusOnRender}: InputProps) => {
     const [text, setText] = useState<string>('');
     const [isFocused, setIsFocused] = useState<boolean>(focusOnRender);
@@ -35,7 +36,7 @@ const Input = ({focusOnRender}: InputProps) => {
                 {
                 //If input is focused and length text has been typed show text length
                 text.length>0&&isFocused?
-                <Text >
+                <Text>
                 {text.length}
                 </Text>:null
                 }

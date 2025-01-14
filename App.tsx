@@ -6,6 +6,7 @@ import Input from './components/Input';
 export default function App() {
 
   const appName = "Lab Activity Code";
+  //controlls if the input componenet is focused on render
   const isFocusedOnRender = true;
 
   return (
