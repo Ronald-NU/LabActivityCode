@@ -44,7 +44,7 @@ const Input = ({focusOnRender}: InputProps) => {
                 onChangeText={text => OnInputChange(text)}/>
 
                 {
-                //If input is focused and text length > 0 show text length(char count)
+                //If the user has typed and isFocused show text length (char count)
                 hasTyped&&isFocused?
                 <Text>
                 {text.length}
