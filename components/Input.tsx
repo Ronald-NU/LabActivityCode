@@ -18,6 +18,8 @@ const Input = ({focusOnRender}: InputProps) => {
                 onFocus={()=>setIsFocused(true)}
                 onBlur={()=>setIsFocused(false)}
                 onChangeText={text => setText(text)}/>
+                <Text>{isFocused?text.length:
+                text.length>=3?"Thank You":"Please type more than 3 characters"}</Text>
             </View>
     )
 }
