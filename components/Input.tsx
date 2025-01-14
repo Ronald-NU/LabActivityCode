@@ -10,6 +10,7 @@ const Input = ({focusOnRender}: InputProps) => {
     const [text, setText] = useState<string>('');
     const [isFocused, setIsFocused] = useState<boolean>(focusOnRender);
     const [hasBlurred, setHasBlurred] = useState<boolean>(false);
+    const [hasTyped, setHasTyped] = useState<boolean>(false);
     const [message,setMessage] = useState<string>('');
 
     //Function to handle onBlur event
@@ -23,6 +24,13 @@ const Input = ({focusOnRender}: InputProps) => {
         }
     }
 
+    const OnInputChange = (newText:string) => {
+        if(!hasTyped){
+        setHasTyped(true);
+        }
+        setText(newText)
+    }
+
     return(
         <View>
             <TextInput 
@@ -32,11 +40,11 @@ const Input = ({focusOnRender}: InputProps) => {
                 autoFocus={focusOnRender}
                 onFocus={()=>setIsFocused(true)}
                 onBlur={()=>{OnInputBlur()}}
-                onChangeText={text => setText(text)}/>
-                
+                onChangeText={text => OnInputChange(text)}/>
+
                 {
                 //If input is focused and text length > 0 show text length(char count)
-                text.length>0&&isFocused?
+                hasTyped&&isFocused?
                 <Text>
                 {text.length}
                 </Text>:null
