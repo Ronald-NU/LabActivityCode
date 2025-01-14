@@ -6,12 +6,13 @@ import Input from './components/Input';
 export default function App() {
 
   const appName = "Lab Activity Code";
+  const isFocusedOnRender = true;
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header appName={appName} />
-      <Input />
+      <Input focusOnRender={isFocusedOnRender} />
       {
       //<Text>{text}</Text>
       }
