@@ -33,8 +33,9 @@ const Input = ({focusOnRender}: InputProps) => {
                 onFocus={()=>setIsFocused(true)}
                 onBlur={()=>{OnInputBlur()}}
                 onChangeText={text => setText(text)}/>
+                
                 {
-                //If input is focused and length text has been typed show text length
+                //If input is focused and text length > 0 show text length(char count)
                 text.length>0&&isFocused?
                 <Text>
                 {text.length}
