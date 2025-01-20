@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { TextInput, View, Text } from 'react-native';
+import { TextInput, View, Text, Button } from 'react-native';
 
 interface InputProps {
     focusOnRender: boolean;
@@ -12,6 +12,11 @@ const Input = ({focusOnRender}: InputProps) => {
     const [hasBlurred, setHasBlurred] = useState<boolean>(false);
     const [hasTyped, setHasTyped] = useState<boolean>(false);
     const [message,setMessage] = useState<string>('');
+
+    //
+    const handleConfirm = () => {
+        console.log(text)
+    }
 
     //Function to handle onBlur event
     const OnInputBlur = () => {
@@ -55,6 +60,7 @@ const Input = ({focusOnRender}: InputProps) => {
                 {message}
                 </Text>:null
                 }
+                <Button title="Confirm" onPress={handleConfirm}/>
             </View>
     )
 }
