@@ -17,13 +17,16 @@ export default function App() {
     setText(data)
     setIsInputVisable(false)
   }
+  const handleCancelInput = () => {
+    setIsInputVisable(false)
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.topSection}>
       <Header appName={appName} />
-      <Input isVisable={isInputVisable} focusOnRender={isFocusedOnRender} handleInputData={handleInputData} />
+      <Input isVisable={isInputVisable} focusOnRender={isFocusedOnRender} handleCancelInput={handleCancelInput} handleInputData={handleInputData} />
       <View style={styles.button}>
       <Button title='Add a goal' onPress={()=>setIsInputVisable(true)}/>
       </View>
