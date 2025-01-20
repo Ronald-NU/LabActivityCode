@@ -70,9 +70,9 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
             <View style={styles.container}>
                 <View style={styles.modal}>
                     <Image source={{ uri:'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} 
-                    style={styles.image} alt='Target Image Network URL'/>
+                    style={styles.image} alt='Target Image with arrow bullseye'/>
                     <Image source={require('../target.png')}
-                    style={styles.image} alt='Target Image Local File'/>
+                    style={styles.image} alt='Target Image with arrow bullseye'/>
             <TextInput 
                 placeholder='Enter Text' 
                 style={styles.textInput} 
