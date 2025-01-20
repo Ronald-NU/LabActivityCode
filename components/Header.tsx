@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 interface HeaderProps {
     appName: string;
@@ -7,9 +7,13 @@ interface HeaderProps {
 const Header = ({appName} : HeaderProps) => {
     return(
         <View>
-            <Text>Welcome to {appName}</Text>
+            <Text style={styles.text}>Welcome to {appName}</Text>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+  text:{fontSize:24,color:'orange', margin:10, height:30, borderBottomWidth:1}
+});
 
 export default Header;
