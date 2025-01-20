@@ -4,9 +4,10 @@ import { TextInput, View, Text, Button } from 'react-native';
 
 interface InputProps {
     focusOnRender: boolean;
+    handleInputData: (data: string) => void;
 }
 
-const Input = ({focusOnRender}: InputProps) => {
+const Input = ({focusOnRender, handleInputData}: InputProps) => {
     const [text, setText] = useState<string>('');
     const [isFocused, setIsFocused] = useState<boolean>(focusOnRender);
     const [hasBlurred, setHasBlurred] = useState<boolean>(false);
@@ -15,6 +16,7 @@ const Input = ({focusOnRender}: InputProps) => {
 
     //
     const handleConfirm = () => {
+        handleInputData(text)
         console.log(text)
     }
 
