@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 import { useState } from 'react';
@@ -19,17 +19,21 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
+      <View style={styles.topSection}>
       <Header appName={appName} />
       <Input isVisable={isInputVisable} focusOnRender={isFocusedOnRender} handleInputData={handleInputData} />
       <View style={styles.button}>
       <Button title='Add a goal' onPress={()=>setIsInputVisable(true)}/>
       </View>
+      </View>
+      <View style={styles.bottomSection}>
       {
       <Text style={styles.text}>{text}</Text>
       }
-    </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -41,5 +45,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{width:'30%',margin:10},
-  text:{fontSize:20,color:'orange', margin:10}
+  text:{fontSize:20,color:'orange', margin:10},
+  topSection:{
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',},
+  bottomSection:{flex:5, alignItems:'center',
+    justifyContent:'flex-start',backgroundColor:'#a3a3a3',width:'100%'}
 });

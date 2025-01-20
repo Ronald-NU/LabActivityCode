@@ -44,7 +44,7 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
     return(
         <Modal animationType='slide' visible={isVisable} transparent={true}>
             <View style={styles.container}>
-                <View style={{backgroundColor:'#e0e0e0', width:'80%', padding:10, borderRadius:10, alignItems:'center'}}>
+                <View style={styles.modal}>
             <TextInput 
                 placeholder='Enter Text' 
                 style={styles.textInput} 
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
   button:{width:'30%',margin:10},
   textInput:{fontSize:20,color:'orange', margin:10, height:40,
     borderWidth: 1, borderRadius: 8, width: '80%', textAlign: 'center'},
-  text:{fontSize:16,color:'orange', margin:10, height:30}
+  text:{fontSize:16,color:'orange', margin:10, height:30},
+  modal:{backgroundColor:'#e0e0e0', width:'80%', padding:10, borderRadius:10, alignItems:'center'}
 });
 
 export default Input;
