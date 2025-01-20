@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{width:'30%',margin:10},
-  text:{fontSize:20,color:'orange', margin:10},
+  text:{fontSize:20,color:'orange', margin:8, backgroundColor:'#e0e0e0', padding:10, borderRadius:10},
   topSection:{
     flex:1,
     alignItems: 'center',
