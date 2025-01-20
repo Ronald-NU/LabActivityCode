@@ -15,6 +15,7 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
     const [hasBlurred, setHasBlurred] = useState<boolean>(false);
     const [hasTyped, setHasTyped] = useState<boolean>(false);
     const [message,setMessage] = useState<string>('');
+    const [valid, setValid] = useState<boolean>(false);
 
     //Function to handle confirm button press
     const handleConfirm = () => {
@@ -52,7 +53,13 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
         if(!hasTyped){
         setHasTyped(true);
         }
+        checkValidity(newText);
         setText(newText)
+    }
+    
+    //Function to check validity of the text input
+    const checkValidity = (text:string) => {
+        setValid(!(text.length<3));
     }
 
     return(
@@ -85,7 +92,7 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
                         <Button title="Cancel" onPress={handleCancel}/>
                 </View>
                 <View style={styles.button}>
-                    <Button title="Confirm" onPress={handleConfirm}/>
+                    <Button disabled={!valid} title="Confirm" onPress={handleConfirm}/>
                 </View>
                 </View>
                 </View>
