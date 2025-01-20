@@ -42,8 +42,9 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
     }
 
     return(
-        <Modal animationType='slide' visible={isVisable}>
+        <Modal animationType='slide' visible={isVisable} transparent={true}>
             <View style={styles.container}>
+                <View style={{backgroundColor:'#e0e0e0', width:'80%', padding:10, borderRadius:10, alignItems:'center'}}>
             <TextInput 
                 placeholder='Enter Text' 
                 style={styles.textInput} 
@@ -69,20 +70,20 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
                 <Button title="Confirm" onPress={handleConfirm}/>
                 </View>
                 </View>
+                </View>
             </Modal>
     )
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button:{width:'30%',marginVertical:10},
-  textInput:{fontSize:20,color:'orange', marginVertical:10, height:40,
+  button:{width:'30%',margin:10},
+  textInput:{fontSize:20,color:'orange', margin:10, height:40,
     borderWidth: 1, borderRadius: 8, width: '80%', textAlign: 'center'},
-  text:{fontSize:16,color:'orange', marginVertical:10, height:30}
+  text:{fontSize:16,color:'orange', margin:10, height:30}
 });
 
 export default Input;

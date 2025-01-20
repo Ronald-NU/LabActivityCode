@@ -40,6 +40,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button:{width:'30%',marginVertical:10},
-  text:{fontSize:20,color:'orange', marginVertical:10}
+  button:{width:'30%',margin:10},
+  text:{fontSize:20,color:'orange', margin:10}
 });

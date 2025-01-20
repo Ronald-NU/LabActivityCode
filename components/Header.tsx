@@ -13,7 +13,7 @@ const Header = ({appName} : HeaderProps) => {
 }
 
 const styles = StyleSheet.create({
-  text:{fontSize:24,color:'orange', marginVertical:10, height:30, borderBottomWidth:1}
+  text:{fontSize:24,color:'orange', margin:10, height:30, borderBottomWidth:1}
 });
 
 export default Header;
