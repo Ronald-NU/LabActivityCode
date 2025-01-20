@@ -15,7 +15,7 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
     const [hasTyped, setHasTyped] = useState<boolean>(false);
     const [message,setMessage] = useState<string>('');
 
-    //
+    //Function to handle confirm button press
     const handleConfirm = () => {
         handleInputData(text)
         console.log(text)
@@ -33,6 +33,7 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
         }
     }
 
+    //Function to handle text input change
     const OnInputChange = (newText:string) => {
         if(!hasTyped){
         setHasTyped(true);
@@ -45,7 +46,7 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
             <View style={styles.container}>
             <TextInput 
                 placeholder='Enter Text' 
-                style={{height:40}} 
+                style={styles.textInput} 
                 value={text}
                 autoFocus={focusOnRender}
                 onFocus={()=>setIsFocused(true)}
@@ -55,7 +56,7 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
                 {
                 //If the user has typed and isFocused show text length (char count)
                 hasTyped&&isFocused?
-                <Text>
+                <Text style={styles.text}>
                 {text.length}
                 </Text>:null
                 }
@@ -64,7 +65,9 @@ const Input = ({focusOnRender, handleInputData, isVisable}: InputProps) => {
                 {message}
                 </Text>:null
                 }
+                <View style={styles.button}>
                 <Button title="Confirm" onPress={handleConfirm}/>
+                </View>
                 </View>
             </Modal>
     )
@@ -76,6 +79,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button:{width:'30%',marginVertical:10},
+  textInput:{fontSize:20,color:'orange', marginVertical:10, height:40,
+    borderWidth: 1, borderRadius: 8, width: '80%', textAlign: 'center'},
+  text:{fontSize:16,color:'orange', marginVertical:10, height:30}
 });
 
 export default Input;

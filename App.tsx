@@ -23,10 +23,12 @@ export default function App() {
       <StatusBar style="auto" />
       <Header appName={appName} />
       <Input isVisable={isInputVisable} focusOnRender={isFocusedOnRender} handleInputData={handleInputData} />
-      {
-      <Text>{text}</Text>
-      }
+      <View style={styles.button}>
       <Button title='Add a goal' onPress={()=>setIsInputVisable(true)}/>
+      </View>
+      {
+      <Text style={styles.text}>{text}</Text>
+      }
     </View>
   );
 }
@@ -38,4 +40,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button:{width:'30%',marginVertical:10},
+  text:{fontSize:20,color:'orange', marginVertical:10}
 });
