@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { TextInput, Modal, Text, Button, StyleSheet, View, Alert } from 'react-native';
+import { TextInput, Modal, Text, Button, StyleSheet, View, Alert, Image } from 'react-native';
 
 interface InputProps {
     focusOnRender: boolean;
@@ -36,16 +36,19 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
             { text: 'Cancel', onPress: () => {} }
         ])
     }
+
     //Function to handle onBlur event
     const OnInputBlur = () => {
         setIsFocused(false);
         setHasTyped(false);
         setHasBlurred(true);
-        if(text.length<3){
+        checkValidity(text);
+       if(text.length<3){
             setMessage("Please type more than 3 characters");
         }else{
             setMessage("Thank You");
         }
+        
     }
 
     //Function to handle text input change
@@ -56,7 +59,7 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
         checkValidity(newText);
         setText(newText)
     }
-    
+
     //Function to check validity of the text input
     const checkValidity = (text:string) => {
         setValid(!(text.length<3));
@@ -66,6 +69,10 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
         <Modal animationType='slide' visible={isVisable} transparent={true}>
             <View style={styles.container}>
                 <View style={styles.modal}>
+                    <Image source={{ uri:'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} 
+                    style={styles.image} alt='Target Image Network URL'/>
+                    <Image source={require('../target.png')}
+                    style={styles.image} alt='Target Image Local File'/>
             <TextInput 
                 placeholder='Enter Text' 
                 style={styles.textInput} 
@@ -76,7 +83,6 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
                 onChangeText={text => OnInputChange(text)}/>
 
                 {
-                //If the user has typed and isFocused show text length (char count)
                 hasTyped&&isFocused?
                 <Text style={styles.text}>
                 {text.length}
@@ -107,6 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{width:'30%',margin:10},
+  image:{width:100, height:100},
   textInput:{fontSize:20,color:'orange', margin:10, height:40,
     borderWidth: 1, borderRadius: 8, width: '80%', textAlign: 'center'},
     buttonContainer:{flexDirection:'row', justifyContent:'space-between'},

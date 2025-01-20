@@ -33,9 +33,9 @@ export default function App() {
       </View>
       <View style={styles.bottomSection}>
       {
-      <View style={styles.textContainer}>
+      text!=''?<View style={styles.textContainer}>
           <Text style={styles.text}>{text}</Text>
-      </View>
+      </View>:null
       }
       </View>
     </SafeAreaView>
@@ -50,11 +50,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{width:'30%',margin:10},
-  text:{fontSize:20,color:'orange', padding:10,},
+  text:{fontSize:20,color:'orange', padding:10},
   textContainer:{backgroundColor:'#e0e0e0', borderRadius:10},
   topSection:{
     flex:1,
+    justifyContent:'space-around',
     alignItems: 'center'},
-  bottomSection:{flex:5, alignItems:'center', padding:10,
+  bottomSection:{flex:4, alignItems:'center', padding:10,
     justifyContent:'flex-start', backgroundColor:'#a3a3a3',width:'100%'}
 });
