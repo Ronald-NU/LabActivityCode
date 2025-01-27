@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ export default function App() {
 
   //Function to handle input data from the input component and hide modal
   const handleInputData = (data: string) => {
-    //creates new goal object with id random num 0-1000
+    //creates new goal object with id random num 0-1000000
     var newGoal:Goal = {
       text: data,
       id: Math.floor(Math.random()*1000000)
@@ -42,6 +42,14 @@ export default function App() {
       }
     }))
   }
+  const handelDeleteAll = () => {
+     Alert.alert('Delete All?','Are you sure you want to delete all goals?',[
+                { text: 'Yes', onPress: () => {
+                    setGoals([]);
+                } },
+                { text: 'No', onPress: () => {} }
+            ])
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -60,6 +68,10 @@ export default function App() {
         data={goals}
         renderItem={({item}) => <GoalItem goal={item} handleOnDelete={handleOnDeleteGoal} />}
         keyExtractor={(item) => item.id.toString()}
+        ListEmptyComponent={<Text style={styles.text}>No goals to show</Text>}
+        ListHeaderComponent={goals.length>0?<Text style={styles.text}>My Goal List</Text>:null}
+        ListFooterComponent={goals.length>0?<Button title={'Delete All'} onPress={handelDeleteAll}/>:null}
+        ItemSeparatorComponent={() => <View style={{ height: 3, backgroundColor: '#e0e0e0' }} />}
         />
       </View>
       
@@ -75,8 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{width:'30%',margin:10},
-  text:{fontSize:20,color:'orange', padding:10, textAlign:'center'},
-  textContainer:{backgroundColor:'#e0e0e0', borderRadius:10, marginVertical:8},
+  text:{fontSize:20,color:'orange', textAlign:'center'},
   topSection:{
     flex:1,
     justifyContent:'space-around',
