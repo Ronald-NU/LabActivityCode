@@ -33,6 +33,16 @@ export default function App() {
     setIsInputVisable(false)
   }
 
+  const handleOnDeleteGoal = (id:number) => { 
+    setGoals(goals => goals.filter((goal)=> {
+      if(goal.id==id){
+        return false
+      }else{
+        return true
+      }
+    }))
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -48,7 +58,7 @@ export default function App() {
         <FlatList
         contentContainerStyle={{alignItems:'center'}}
         data={goals}
-        renderItem={({item}) => <GoalItem goal={item} />}
+        renderItem={({item}) => <GoalItem goal={item} handleOnDelete={handleOnDeleteGoal} />}
         keyExtractor={(item) => item.id.toString()}
         />
       </View>

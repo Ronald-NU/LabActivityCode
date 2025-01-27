@@ -1,11 +1,14 @@
 import { Goal } from "@/App";
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, Button} from 'react-native';
 
- type GoalItemProps = {goal: Goal};
+ type GoalItemProps = {goal: Goal,
+    handleOnDelete:(id:number)=>void;
+ };
 
-  export const GoalItem = ( {goal}: GoalItemProps ) => (
+  export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
     <View style={styles.textContainer}>
       <Text style={styles.text}>{goal.text}</Text>
+      <Button title="x" color={'grey'} onPress={()=>{handleOnDelete(goal.id)}}/>
     </View>
   );
 
