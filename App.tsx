@@ -24,7 +24,7 @@ export default function App() {
     //creates new goal object with id random num 0-1000
     var newGoal:Goal = {
       text: data,
-      id: Math.floor(Math.random()*1000)
+      id: Math.floor(Math.random()*1000000)
     }
     setGoals([newGoal, ...goals]);
     setText(data)
@@ -46,9 +46,13 @@ export default function App() {
       </View>
       <View style={styles.bottomSection}>
       {
-      text!=''?<View style={styles.textContainer}>
-          <Text style={styles.text}>{text}</Text>
-      </View>:null
+        goals.map((goal)=>{
+          return(
+          <View key={goal.id} style={styles.textContainer}>
+            <Text style={styles.text}>{goal.text}</Text>
+          </View>
+          )
+        })
       }
       </View>
     </SafeAreaView>
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
   },
   button:{width:'30%',margin:10},
   text:{fontSize:20,color:'orange', padding:10},
-  textContainer:{backgroundColor:'#e0e0e0', borderRadius:10},
+  textContainer:{backgroundColor:'#e0e0e0', borderRadius:10, marginVertical:8},
   topSection:{
     flex:1,
     justifyContent:'space-around',
