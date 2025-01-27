@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, FlatList } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 import { useState } from 'react';
+import { GoalItem } from './components/GoalItem';
 
 export interface Goal {
   text: string;
@@ -13,7 +14,6 @@ export default function App() {
   
   const [goals, setGoals] = useState<Goal[]>([]);
 
-  const [text, setText] = useState<string>('');
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
   const appName = "Lab Activity Code";
   //controls if the input componenet is focused on render
@@ -27,19 +27,11 @@ export default function App() {
       id: Math.floor(Math.random()*1000000)
     }
     setGoals(goals => [newGoal, ...goals]);
-    setText(data)
     setIsInputVisable(false)
   }
   const handleCancelInput = () => {
     setIsInputVisable(false)
   }
-  type ItemProps = {goal: Goal};
-
-  const Item = ( {goal}: ItemProps ) => (
-    <View style={styles.textContainer}>
-      <Text style={styles.text}>{goal.text}</Text>
-    </View>
-  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,14 +43,16 @@ export default function App() {
       <Button title='Add a goal' onPress={()=>setIsInputVisable(true)}/>
       </View>
       </View>
-      
+
       <View style={styles.bottomSection}>
         <FlatList
+        contentContainerStyle={{alignItems:'center'}}
         data={goals}
-        renderItem={({item}) => <Item goal={item} />}
+        renderItem={({item}) => <GoalItem goal={item} />}
         keyExtractor={(item) => item.id.toString()}
         />
       </View>
+      
     </SafeAreaView>
   );
 }
@@ -77,6 +71,6 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'space-around',
     alignItems: 'center'},
-  bottomSection:{flex:4, alignItems:'center', padding:10,
+  bottomSection:{flex:4, padding:10,
     justifyContent:'flex-start', backgroundColor:'#a3a3a3',width:'100%'}
 });
