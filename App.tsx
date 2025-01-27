@@ -60,6 +60,7 @@ export default function App() {
         data={goals}
         renderItem={({item}) => <GoalItem goal={item} handleOnDelete={handleOnDeleteGoal} />}
         keyExtractor={(item) => item.id.toString()}
+        ListEmptyComponent={<Text style={styles.text}>No goals to show</Text>}
         />
       </View>
       
@@ -75,8 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{width:'30%',margin:10},
-  text:{fontSize:20,color:'orange', padding:10, textAlign:'center'},
-  textContainer:{backgroundColor:'#e0e0e0', borderRadius:10, marginVertical:8},
+  text:{fontSize:20,color:'orange', fontWeight:'600', textAlign:'center'},
   topSection:{
     flex:1,
     justifyContent:'space-around',
