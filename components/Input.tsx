@@ -22,7 +22,6 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
         handleInputData(text)
         OnInputBlur();
         setText('')
-        console.log(text)
     }
 
     //Function to handle cancel button press
