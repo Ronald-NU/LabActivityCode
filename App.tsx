@@ -4,7 +4,14 @@ import Header from './components/Header';
 import Input from './components/Input';
 import { useState } from 'react';
 
+export interface Goal {
+  text: string;
+  id: number;
+}
+
 export default function App() {
+  
+  const [goals, setGoals] = useState<Goal[]>([]);
 
   const [text, setText] = useState<string>('');
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
@@ -14,6 +21,12 @@ export default function App() {
 
   //Function to handle input data from the input component and hide modal
   const handleInputData = (data: string) => {
+    //creates new goal object with id random num 0-1000
+    var newGoal:Goal = {
+      text: data,
+      id: Math.floor(Math.random()*1000)
+    }
+    setGoals([newGoal, ...goals]);
     setText(data)
     setIsInputVisable(false)
   }
