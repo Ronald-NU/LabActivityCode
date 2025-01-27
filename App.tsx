@@ -21,7 +21,7 @@ export default function App() {
 
   //Function to handle input data from the input component and hide modal
   const handleInputData = (data: string) => {
-    //creates new goal object with id random num 0-1000
+    //creates new goal object with id random num 0-1000000
     var newGoal:Goal = {
       text: data,
       id: Math.floor(Math.random()*1000000)
