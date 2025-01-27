@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, ScrollView } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 import { useState } from 'react';
@@ -26,7 +26,7 @@ export default function App() {
       text: data,
       id: Math.floor(Math.random()*1000000)
     }
-    setGoals([newGoal, ...goals]);
+    setGoals(goals => [newGoal, ...goals]);
     setText(data)
     setIsInputVisable(false)
   }
@@ -44,7 +44,9 @@ export default function App() {
       <Button title='Add a goal' onPress={()=>setIsInputVisable(true)}/>
       </View>
       </View>
+      
       <View style={styles.bottomSection}>
+      <ScrollView contentContainerStyle={{justifyContent:'center'}} bounces={false} centerContent={true}>
       {
         goals.map((goal)=>{
           return(
@@ -54,6 +56,7 @@ export default function App() {
           )
         })
       }
+      </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button:{width:'30%',margin:10},
-  text:{fontSize:20,color:'orange', padding:10},
+  text:{fontSize:20,color:'orange', padding:10, textAlign:'center'},
   textContainer:{backgroundColor:'#e0e0e0', borderRadius:10, marginVertical:8},
   topSection:{
     flex:1,
