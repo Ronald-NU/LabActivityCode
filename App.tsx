@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 import { useState } from 'react';
@@ -33,6 +33,13 @@ export default function App() {
   const handleCancelInput = () => {
     setIsInputVisable(false)
   }
+  type ItemProps = {goal: Goal};
+
+  const Item = ( {goal}: ItemProps ) => (
+    <View style={styles.textContainer}>
+      <Text style={styles.text}>{goal.text}</Text>
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,17 +53,11 @@ export default function App() {
       </View>
       
       <View style={styles.bottomSection}>
-      <ScrollView contentContainerStyle={{justifyContent:'center'}} bounces={false} centerContent={true}>
-      {
-        goals.map((goal)=>{
-          return(
-          <View key={goal.id} style={styles.textContainer}>
-            <Text style={styles.text}>{goal.text}</Text>
-          </View>
-          )
-        })
-      }
-      </ScrollView>
+        <FlatList
+        data={goals}
+        renderItem={({item}) => <Item goal={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        />
       </View>
     </SafeAreaView>
   );
