@@ -2,7 +2,7 @@ import { Goal } from "@/App";
 import { View, Text, StyleSheet, Button} from 'react-native';
 
  type GoalItemProps = {goal: Goal,
-    handleOnDelete:(id:number)=>void;
+    handleOnDelete:(id:string)=>void;
  };
 
   export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
