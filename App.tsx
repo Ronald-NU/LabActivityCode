@@ -2,16 +2,20 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GoalItem } from './components/GoalItem';
+import { deleteAllFromDB, deleteFromDB, writeToDB } from './Firebase/firestoreHelper';
+
+import { collection, onSnapshot } from 'firebase/firestore';
+import { database } from './Firebase/firebaseSetup';
 
 export interface Goal {
   text: string;
-  id: number;
+  id: string;
 }
 
 export default function App() {
-  
+  const collectionGoals = 'goals';
   const [goals, setGoals] = useState<Goal[]>([]);
 
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
@@ -19,33 +23,45 @@ export default function App() {
   //controls if the input componenet is focused on render
   const isFocusedOnRender = true;
 
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
+      if(!querySnapshot.empty){
+        setGoals(goals => []);
+      querySnapshot.forEach((doc)=>{
+        const displayGoal:Goal = {id:doc.id,text:doc.data().text}
+        setGoals(goals => [displayGoal,...goals]);
+      })
+      }else{
+        setGoals(goals => []);
+      }
+    })
+    return () => {
+      unsubscribe();
+    };
+  }, [])
+  
+
   //Function to handle input data from the input component and hide modal
   const handleInputData = (data: string) => {
-    //creates new goal object with id random num 0-1000000
-    var newGoal:Goal = {
-      text: data,
-      id: Math.floor(Math.random()*1000000)
+    const goalData = {
+      text: data
     }
-    setGoals(goals => [newGoal, ...goals]);
+    writeToDB(goalData,collectionGoals)
+  
     setIsInputVisable(false)
   }
   const handleCancelInput = () => {
     setIsInputVisable(false)
   }
 
-  const handleOnDeleteGoal = (id:number) => { 
-    setGoals(goals => goals.filter((goal)=> {
-      if(goal.id==id){
-        return false
-      }else{
-        return true
-      }
-    }))
+  const handleOnDeleteGoal = (id:string) => { 
+    deleteFromDB(id,collectionGoals)
   }
+
   const handelDeleteAll = () => {
      Alert.alert('Delete All?','Are you sure you want to delete all goals?',[
                 { text: 'Yes', onPress: () => {
-                    setGoals([]);
+                  deleteAllFromDB(collectionGoals);
                 } },
                 { text: 'No', onPress: () => {} }
             ])
