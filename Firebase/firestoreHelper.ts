@@ -1,8 +1,9 @@
-import { collection, addDoc, doc, deleteDoc, getDocs } from "firebase/firestore"; 
+import { collection, addDoc, doc, deleteDoc, getDocs, getDoc, updateDoc, setDoc } from "firebase/firestore"; 
 import { database } from "./firebaseSetup";
 
 interface goalData {
   text: string;
+  warning?: boolean;
 }
 
 export async function writeToDB(data: goalData, collectionName: string) {
@@ -35,3 +36,27 @@ export async function deleteAllFromDB(collectionName:string) {
       console.log(err)
     }
   }
+
+export async function readDocFromDB(id: string, collectionName: string) {
+  try { 
+    const goal = await getDoc(doc(database,collectionName,id))
+    if(goal.exists()){
+    return goal;
+    }else{
+      return null;
+    }
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export async function updateDB(id: string, collectionName: string, goalData:goalData) {
+  try { 
+    const docRef = doc(database,collectionName,id);
+    await setDoc(docRef,goalData);
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
