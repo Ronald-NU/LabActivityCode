@@ -12,6 +12,7 @@ import { database } from '../Firebase/firebaseSetup';
 export interface Goal {
   text: string;
   id: string;
+  warning?:boolean;
 }
 
 export default function App() {

@@ -1,4 +1,4 @@
-import { collection, addDoc, doc, deleteDoc, getDocs, getDoc } from "firebase/firestore"; 
+import { collection, addDoc, doc, deleteDoc, getDocs, getDoc, updateDoc } from "firebase/firestore"; 
 import { database } from "./firebaseSetup";
 
 interface goalData {
@@ -39,7 +39,21 @@ export async function deleteAllFromDB(collectionName:string) {
 export async function readDocFromDB(id: string, collectionName: string) {
   try { 
     const goal = await getDoc(doc(database,collectionName,id))
+    if(goal.exists()){
     return goal;
+    }else{
+      return null;
+    }
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export async function updateDB(id: string, collectionName: string, goalData:goalData) {
+  try { 
+    const docRef = doc(database,collectionName,id);
+   await updateDoc(docRef,{text:goalData.text,warning:true});
   }
   catch (err) {
     console.log(err)

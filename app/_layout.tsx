@@ -1,26 +1,17 @@
 import { Stack } from "expo-router";
 
 export default function Layout() {
-  return   (
-    <Stack>
+    return   (
+    <Stack screenOptions={{headerStyle: {
+        backgroundColor: 'orange'
+    },
+    headerTitleStyle: {
+        color: 'white'
+    },
+    headerTintColor: 'white'
+    }}>
     <Stack.Screen name="index"
-    options={{title:'All My Goals',
-        headerStyle:{
-            backgroundColor:'orange'
-        },
-        headerTitleStyle:{
-            color:'white'
-        }}} />
-    <Stack.Screen 
-    options={{title:'Goal Details',
-        headerStyle:{
-            backgroundColor:'orange'
-        },
-        headerTitleStyle:{
-            color:'white'
-        },
-        headerTintColor:'white'
-    }}
-    name="goals/[id]" />
+    options={{headerTitle:'All My Goals'}} />
+    <Stack.Screen name="goals/[id]" />
     </Stack>)
 }

@@ -11,7 +11,7 @@ import { View, Text, StyleSheet, Button} from 'react-native';
     <View style={styles.textContainer}>
       <Text style={styles.text}>{goal.text}</Text>
       <Button title="x" color={'grey'} onPress={()=>{handleOnDelete(goal.id)}}/>
-      <Link href={`/goals/${goal.id}`} style={{fontSize:16, color:'grey',marginRight:8}}> i </Link>
+      <Link href={{pathname:`/goals/${goal.id}`, params: { titleName: `${goal.text}` }}} style={{fontSize:16, color:'grey',marginRight:8}}> i </Link>
     </View>
   );
 
