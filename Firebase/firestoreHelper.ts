@@ -1,8 +1,9 @@
-import { collection, addDoc, doc, deleteDoc, getDocs, getDoc, updateDoc } from "firebase/firestore"; 
+import { collection, addDoc, doc, deleteDoc, getDocs, getDoc, updateDoc, setDoc } from "firebase/firestore"; 
 import { database } from "./firebaseSetup";
 
 interface goalData {
   text: string;
+  warning?: boolean;
 }
 
 export async function writeToDB(data: goalData, collectionName: string) {
@@ -53,7 +54,7 @@ export async function readDocFromDB(id: string, collectionName: string) {
 export async function updateDB(id: string, collectionName: string, goalData:goalData) {
   try { 
     const docRef = doc(database,collectionName,id);
-   await updateDoc(docRef,{text:goalData.text,warning:true});
+    await setDoc(docRef,goalData);
   }
   catch (err) {
     console.log(err)

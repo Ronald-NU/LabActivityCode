@@ -8,11 +8,17 @@ export default function GoalDetails() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [goal, setGoal] = useState<Goal|null>(null);
     const [warning, setWarning] = useState<boolean>(false);
+    console.log(warning)
+
     useEffect(() => {
         const fetchGoal = async () => {
             try {
                 const ReadGoal = await readDocFromDB(id, "goals");
-                setGoal(goal => ReadGoal?.data() as Goal);
+                if(ReadGoal?.exists()){
+                const data = ReadGoal?.data();
+                data.warning ? setWarning(true) : setWarning(false);
+                setGoal(goal => data as Goal);
+               }
             } catch (err) {
                 console.log(err);
             }
@@ -22,12 +28,13 @@ export default function GoalDetails() {
 
     const setWarningHandle = () => {
         setWarning(true);
+        updateDB(id, "goals", { text: goal ? goal?.text:"", warning: true });
     }
+
   return (
     <View>
         <Stack.Screen options={{
                     headerTitle: goal ? (warning?'warning':goal?.text): "",
-                    
                     headerRight: () => {
                         return <Button onPress={()=>setWarningHandle()}
                         title="warning"
