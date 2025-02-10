@@ -1,4 +1,4 @@
-import { Goal } from "@/App";
+import { Goal } from "@/app";
 import { View, Text, StyleSheet, Button} from 'react-native';
 
  type GoalItemProps = {goal: Goal,

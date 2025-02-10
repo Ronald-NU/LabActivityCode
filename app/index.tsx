@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert } from 'react-native';
-import Header from './components/Header';
-import Input from './components/Input';
+import Header from '../components/Header';
+import Input from '../components/Input';
 import { useState, useEffect } from 'react';
-import { GoalItem } from './components/GoalItem';
-import { deleteAllFromDB, deleteFromDB, writeToDB } from './Firebase/firestoreHelper';
+import { GoalItem } from '../components/GoalItem';
+import { deleteAllFromDB, deleteFromDB, writeToDB } from '../Firebase/firestoreHelper';
 
 import { collection, onSnapshot } from 'firebase/firestore';
-import { database } from './Firebase/firebaseSetup';
+import { database } from '../Firebase/firebaseSetup';
 
 export interface Goal {
   text: string;
