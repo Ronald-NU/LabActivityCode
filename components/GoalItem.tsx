@@ -7,11 +7,14 @@ import { FontAwesome } from '@expo/vector-icons';
 
  type GoalItemProps = {goal: Goal,
     handleOnDelete:(id:string)=>void;
+    onPressIn:()=>void;
+    onPressOut:()=>void;
  };
 
-  export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
+  export const GoalItem = ( {goal,handleOnDelete,onPressIn,onPressOut}: GoalItemProps ) => (
     
-    <Pressable onLongPress={()=>{
+    <Pressable onPressIn={onPressIn} onPressOut={onPressOut}
+    onLongPress={()=>{
       Alert.alert('Delete Goal', `Are you sure you want to delete ${goal.text}?`, [
         {text: 'Cancel', style: 'cancel'},
         {text: 'Delete', onPress: () => handleOnDelete(goal.id)}
