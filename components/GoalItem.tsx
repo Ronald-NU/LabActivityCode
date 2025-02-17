@@ -1,6 +1,7 @@
 import { Goal } from "@/app";
 import { Link, router } from "expo-router";
 import { Text, StyleSheet, Button, Pressable} from 'react-native';
+import { PressableButton } from "./PressableButton";
 
  type GoalItemProps = {goal: Goal,
     handleOnDelete:(id:string)=>void;
@@ -13,7 +14,9 @@ import { Text, StyleSheet, Button, Pressable} from 'react-native';
       return [styles.textContainer, pressed && styles.pressedStyle];
     }}>
       <Text style={styles.text}>{goal.text}</Text>
-      <Button title="x" color={'grey'} onPress={()=>{handleOnDelete(goal.id)}}/>
+      <PressableButton pressedHandler={()=>{handleOnDelete(goal.id)}} pressedStyle={styles.pressedStyle}>
+        <Text style={{color:'white',paddingHorizontal:8}}>X</Text>
+      </PressableButton>
     </Pressable>
   );
 
