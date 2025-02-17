@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert, Pressable, TouchableHighlight } from 'react-native';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import { useState, useEffect } from 'react';
@@ -59,7 +59,7 @@ export default function App() {
     deleteFromDB(id,collectionGoals)
   }
 
-  const handelDeleteAll = () => {
+  const handleDeleteAll = () => {
      Alert.alert('Delete All?','Are you sure you want to delete all goals?',[
                 { text: 'Yes', onPress: () => {
                   deleteAllFromDB(collectionGoals);
@@ -83,12 +83,18 @@ export default function App() {
         <FlatList
         contentContainerStyle={{alignItems:'center'}}
         data={goals}
-        renderItem={({item}) => <GoalItem goal={item} handleOnDelete={handleOnDeleteGoal} />}
+        renderItem={({item, index, separators}) => 
+          <GoalItem goal={item} handleOnDelete={handleOnDeleteGoal} 
+        onPressIn={separators.highlight}
+        onPressOut={separators.unhighlight}/>}
         keyExtractor={(item) => item.id.toString()}
         ListEmptyComponent={<Text style={styles.text}>No goals to show</Text>}
         ListHeaderComponent={goals.length>0?<Text style={styles.text}>My Goal List</Text>:null}
-        ListFooterComponent={goals.length>0?<Button title={'Delete All'} onPress={handelDeleteAll}/>:null}
-        ItemSeparatorComponent={() => <View style={{ height: 3, backgroundColor: '#e0e0e0' }} />}
+        ListFooterComponent={goals.length>0?<Button title={'Delete All'} onPress={handleDeleteAll}/>:null}
+        ItemSeparatorComponent={({ highlighted }) => {
+          const backgroundColor = highlighted ? 'orange' : '#e0e0e0';
+          return <View style={{ height: 3, backgroundColor: backgroundColor}}/>
+        }}
         />
       </View>
       

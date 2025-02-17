@@ -2,7 +2,9 @@ import { View, Text, Button, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Stack, useLocalSearchParams } from "expo-router";
 import { readDocFromDB, updateDB } from '@/Firebase/firestoreHelper';
+import { FontAwesome } from '@expo/vector-icons';
 import { Goal } from '../index';
+import { PressableButton } from '@/components/PressableButton';
 
 export default function GoalDetails() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -36,10 +38,9 @@ export default function GoalDetails() {
         <Stack.Screen options={{
                     headerTitle: goal ? (warning?'warning':goal?.text): "",
                     headerRight: () => {
-                        return <Button onPress={()=>setWarningHandle()}
-                        title="warning"
-                        color='white'
-                        />
+                        return <PressableButton pressedHandler={()=>{setWarningHandle()}} pressedStyle={{opacity:0.5}} >
+                        <FontAwesome name="warning" size={24} color="white" />
+                      </PressableButton>
                     }
                  }} />
       <Text style={warning && styles.textWarning}>Details: {goal?.text}, id:{id}</Text>

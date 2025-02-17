@@ -1,18 +1,33 @@
 import { Goal } from "@/app";
-import { Link } from "expo-router";
-import { View, Text, StyleSheet, Button} from 'react-native';
+import {  router } from "expo-router";
+import { Text, StyleSheet, Pressable, Alert} from 'react-native';
+import { PressableButton } from "./PressableButton";
+import React from "react";
+import { FontAwesome } from '@expo/vector-icons';
 
  type GoalItemProps = {goal: Goal,
     handleOnDelete:(id:string)=>void;
+    onPressIn:()=>void;
+    onPressOut:()=>void;
  };
 
-  export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
+  export const GoalItem = ( {goal,handleOnDelete,onPressIn,onPressOut}: GoalItemProps ) => (
     
-    <View style={styles.textContainer}>
+    <Pressable onPressIn={onPressIn} onPressOut={onPressOut}
+    onLongPress={()=>{
+      Alert.alert('Delete Goal', `Are you sure you want to delete ${goal.text}?`, [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'Delete', onPress: () => handleOnDelete(goal.id)}
+      ]);
+    }} android_ripple={{color:'white'}} onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} 
+    style={({ pressed }) => {
+      return [styles.textContainer, pressed && styles.pressedStyle];
+    }}>
       <Text style={styles.text}>{goal.text}</Text>
-      <Button title="x" color={'grey'} onPress={()=>{handleOnDelete(goal.id)}}/>
-      <Link href={{pathname:`/goals/${goal.id}`, params: { titleName: `${goal.text}` }}} style={{fontSize:16, color:'grey',marginRight:8}}> i </Link>
-    </View>
+      <PressableButton pressedHandler={()=>{handleOnDelete(goal.id)}} pressedStyle={styles.pressedStyle}>
+        <FontAwesome name="trash" size={24} color="white" />
+      </PressableButton>
+    </Pressable>
   );
 
   const styles = StyleSheet.create({
@@ -24,4 +39,7 @@ import { View, Text, StyleSheet, Button} from 'react-native';
         alignItems:'center',backgroundColor:'#e0e0e0',
         borderRadius:10, marginVertical:8
     },
+    pressedStyle:{
+        opacity:0.5
+    }
   });
