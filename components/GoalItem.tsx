@@ -8,7 +8,7 @@ import { Text, StyleSheet, Button, Pressable} from 'react-native';
 
   export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
     
-    <Pressable onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} style={styles.textContainer}>
+    <Pressable android_ripple={{color:'white'}} onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} style={styles.textContainer}>
       <Text style={styles.text}>{goal.text}</Text>
       <Button title="x" color={'grey'} onPress={()=>{handleOnDelete(goal.id)}}/>
     </Pressable>
