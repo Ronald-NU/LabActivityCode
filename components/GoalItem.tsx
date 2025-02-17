@@ -8,7 +8,10 @@ import { Text, StyleSheet, Button, Pressable} from 'react-native';
 
   export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
     
-    <Pressable android_ripple={{color:'white'}} onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} style={styles.textContainer}>
+    <Pressable android_ripple={{color:'white'}} onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} 
+    style={({ pressed }) => {
+      return [styles.textContainer, pressed && styles.pressedStyle];
+    }}>
       <Text style={styles.text}>{goal.text}</Text>
       <Button title="x" color={'grey'} onPress={()=>{handleOnDelete(goal.id)}}/>
     </Pressable>
@@ -23,4 +26,7 @@ import { Text, StyleSheet, Button, Pressable} from 'react-native';
         alignItems:'center',backgroundColor:'#e0e0e0',
         borderRadius:10, marginVertical:8
     },
+    pressedStyle:{
+        opacity:0.5
+    }
   });
