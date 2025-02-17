@@ -1,6 +1,6 @@
 import { Goal } from "@/app";
-import { Link } from "expo-router";
-import { View, Text, StyleSheet, Button} from 'react-native';
+import { Link, router } from "expo-router";
+import { Text, StyleSheet, Button, Pressable} from 'react-native';
 
  type GoalItemProps = {goal: Goal,
     handleOnDelete:(id:string)=>void;
@@ -8,11 +8,10 @@ import { View, Text, StyleSheet, Button} from 'react-native';
 
   export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
     
-    <View style={styles.textContainer}>
+    <Pressable onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} style={styles.textContainer}>
       <Text style={styles.text}>{goal.text}</Text>
       <Button title="x" color={'grey'} onPress={()=>{handleOnDelete(goal.id)}}/>
-      <Link href={{pathname:`/goals/${goal.id}`, params: { titleName: `${goal.text}` }}} style={{fontSize:16, color:'grey',marginRight:8}}> i </Link>
-    </View>
+    </Pressable>
   );
 
   const styles = StyleSheet.create({
