@@ -1,6 +1,6 @@
 import { Goal } from "@/app";
 import {  router } from "expo-router";
-import { Text, StyleSheet, Pressable} from 'react-native';
+import { Text, StyleSheet, Pressable, Alert} from 'react-native';
 import { PressableButton } from "./PressableButton";
 import React from "react";
 import { FontAwesome } from '@expo/vector-icons';
@@ -11,7 +11,12 @@ import { FontAwesome } from '@expo/vector-icons';
 
   export const GoalItem = ( {goal,handleOnDelete}: GoalItemProps ) => (
     
-    <Pressable android_ripple={{color:'white'}} onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} 
+    <Pressable onLongPress={()=>{
+      Alert.alert('Delete Goal', `Are you sure you want to delete ${goal.text}?`, [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'Delete', onPress: () => handleOnDelete(goal.id)}
+      ]);
+    }} android_ripple={{color:'white'}} onPress={()=>{router.setParams({titleName: `${goal.text}`});router.navigate(`/goals/${goal.id}`);}} 
     style={({ pressed }) => {
       return [styles.textContainer, pressed && styles.pressedStyle];
     }}>
