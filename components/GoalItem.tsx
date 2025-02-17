@@ -1,7 +1,9 @@
 import { Goal } from "@/app";
-import { Link, router } from "expo-router";
-import { Text, StyleSheet, Button, Pressable} from 'react-native';
+import {  router } from "expo-router";
+import { Text, StyleSheet, Pressable} from 'react-native';
 import { PressableButton } from "./PressableButton";
+import React from "react";
+import { FontAwesome } from '@expo/vector-icons';
 
  type GoalItemProps = {goal: Goal,
     handleOnDelete:(id:string)=>void;
@@ -15,7 +17,7 @@ import { PressableButton } from "./PressableButton";
     }}>
       <Text style={styles.text}>{goal.text}</Text>
       <PressableButton pressedHandler={()=>{handleOnDelete(goal.id)}} pressedStyle={styles.pressedStyle}>
-        <Text style={{color:'white',paddingHorizontal:8}}>X</Text>
+        <FontAwesome name="trash" size={24} color="white" />
       </PressableButton>
     </Pressable>
   );

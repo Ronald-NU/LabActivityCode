@@ -12,7 +12,7 @@ interface PressableButtonProps {
   return (
     <Pressable android_ripple={{color:'white'}} onPress={pressedHandler} style={({ pressed }) => {
       return [pressed && pressedStyle]; }}>
-      <View>
+      <View style={{padding:8}}>
         {children}
       </View>
       </Pressable>
