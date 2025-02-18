@@ -8,6 +8,7 @@ import { deleteAllFromDB, deleteFromDB, writeToDB } from '../Firebase/firestoreH
 
 import { collection, onSnapshot } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
+import { PressableButton } from '@/components/PressableButton';
 
 export interface Goal {
   text: string;
@@ -75,7 +76,9 @@ export default function App() {
       <Header appName={appName} />
       <Input isVisable={isInputVisable} focusOnRender={isFocusedOnRender} handleCancelInput={handleCancelInput} handleInputData={handleInputData} />
       <View style={styles.button}>
-      <Button title='Add a goal' onPress={()=>setIsInputVisable(true)}/>
+        <PressableButton pressedHandler={()=>{setIsInputVisable(true)}} pressedStyle={{opacity:0.5}}>
+            <Text style={[styles.text,{backgroundColor: 'grey', paddingVertical:8, borderRadius: 10,width:130}]}>Add a goal</Text>
+          </PressableButton>
       </View>
       </View>
 
