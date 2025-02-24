@@ -1,32 +1,37 @@
 import { FlatList, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { writeToDB } from '@/Firebase/firestoreHelper';
+import { getCollectionFromDB, User, writeToDB } from '@/Firebase/firestoreHelper';
 
 interface GoalUserProps {
     id:string
 }
 
 export const GoalUsers = ({id}:GoalUserProps) => {
-    const [Users, setUsers] = useState([]);
+    const [Users, setUsers] = useState<User[]>([]);
     useEffect(() => {     
         const getUserGoalData =  async () => {
+            const users = await getCollectionFromDB(`goals/${id}/users`);
+            if(users){
+                users.docs.forEach((value)=>setUsers((val)=>[value.data() as User,...val]))
+            }else{
             try {
             const promise = await fetch('https://jsonplaceholder.typicode.com/users');
             //only extract data if response ok
             if(promise.ok){
             const Data = await promise.json();
             setUsers(()=> Data);
-            if(Users.length > 1){
-                Users.forEach((value)=>{
-                    writeToDB(value,`goals/${id}/users`)
-                })
-               }
+            if(Users.length > 0){
+            Users.forEach((value)=>{
+                writeToDB(value,`goals/${id}/users`)
+            })
+            }
             }else {
                 throw new Error(`Something went wrong with ${promise.status}`)
             }
             }catch (err) {
                 console.log("fetching users ", err)
             }
+        }
       
         }
         getUserGoalData();
