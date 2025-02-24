@@ -94,9 +94,11 @@ export async function updateDB(id: string, collectionName: string, goalData:goal
 
 export async function getCollectionFromDB(collectionName: string) {
   try { 
-    const users = await getDocs(collection(database,collectionName))
-    if(!users.empty){
-    return users;
+    const querySnapshot = await getDocs(collection(database,collectionName))
+    if(!querySnapshot.empty){
+      var Data : any[] = []
+      querySnapshot.docs.forEach((value)=>Data.push(value.data()))
+    return Data;
     }else{
       return null;
     }
