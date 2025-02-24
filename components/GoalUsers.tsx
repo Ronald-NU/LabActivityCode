@@ -2,7 +2,11 @@ import { FlatList, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { writeToDB } from '@/Firebase/firestoreHelper';
 
-export const GoalUsers = () => {
+interface GoalUserProps {
+    id:string
+}
+
+export const GoalUsers = ({id}:GoalUserProps) => {
     const [Users, setUsers] = useState([]);
     useEffect(() => {     
         const getUserGoalData =  async () => {
@@ -10,15 +14,20 @@ export const GoalUsers = () => {
             const promise = await fetch('https://jsonplaceholder.typicode.com/users');
             //only extract data if response ok
             if(promise.ok){
-            const responseData = await promise.json();
-            setUsers(()=>responseData);
+            const Data = await promise.json();
+            setUsers(()=> Data);
+            if(Users.length > 1){
+                Users.forEach((value)=>{
+                    writeToDB(value,`goals/${id}/users`)
+                })
+               }
             }else {
                 throw new Error(`Something went wrong with ${promise.status}`)
             }
             }catch (err) {
                 console.log("fetching users ", err)
             }
-           // writeToDB({text:Users[0]['name']},`goals/{$id}/users`)
+      
         }
         getUserGoalData();
       }, []);
@@ -31,7 +40,7 @@ export const GoalUsers = () => {
          <FlatList
                 contentContainerStyle={{alignItems:'center'}}
                 data={Users}
-                renderItem={({item, index, separators}) => 
+                renderItem={({item, index}) => 
                     <View key={index}>
                         <Text>{item['name']}</Text>
                     </View>

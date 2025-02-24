@@ -6,7 +6,7 @@ interface goalData {
   warning?: boolean;
 }
 
-export async function writeToDB(data: goalData, collectionName: string) {
+export async function writeToDB(data: any, collectionName: string) {
 	try {
 	     await addDoc(collection(database,collectionName),data);
 	  }

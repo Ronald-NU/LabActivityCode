@@ -44,7 +44,7 @@ export default function GoalDetails() {
                     }
                  }} />
       <Text style={warning && styles.textWarning}>Details: {goal?.text}</Text>
-                  <GoalUsers />
+                  <GoalUsers id={id} />
     </View>
   )
 }
