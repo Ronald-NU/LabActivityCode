@@ -6,7 +6,37 @@ interface goalData {
   warning?: boolean;
 }
 
-export async function writeToDB(data: goalData, collectionName: string) {
+interface Geo {
+  lat: number;
+  lng: number;
+}
+
+interface Address {
+  street: string;
+  suite: string;
+  city: string;
+  zipcode: string;
+  geo: Geo;
+}
+
+interface Company {
+  name: string;
+  catchPhrase: string;
+  bs: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: Address;
+  phone: string;
+  website: string;
+  company: Company;
+}
+
+export async function writeToDB(data: goalData|User, collectionName: string) {
 	try {
 	     await addDoc(collection(database,collectionName),data);
 	  }
@@ -55,6 +85,23 @@ export async function updateDB(id: string, collectionName: string, goalData:goal
   try { 
     const docRef = doc(database,collectionName,id);
     await setDoc(docRef,goalData);
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+
+export async function getCollectionFromDB(collectionName: string) {
+  try { 
+    const querySnapshot = await getDocs(collection(database,collectionName))
+    if(!querySnapshot.empty){
+      var Data : any[] = []
+      querySnapshot.docs.forEach((value)=>Data.push(value.data()))
+    return Data;
+    }else{
+      return null;
+    }
   }
   catch (err) {
     console.log(err)

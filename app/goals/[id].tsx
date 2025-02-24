@@ -5,12 +5,12 @@ import { readDocFromDB, updateDB } from '@/Firebase/firestoreHelper';
 import { FontAwesome } from '@expo/vector-icons';
 import { Goal } from '../index';
 import { PressableButton } from '@/components/PressableButton';
+import GoalUsers from '@/components/GoalUsers';
 
 export default function GoalDetails() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [goal, setGoal] = useState<Goal|null>(null);
     const [warning, setWarning] = useState<boolean>(false);
-    console.log(warning)
 
     useEffect(() => {
         const fetchGoal = async () => {
@@ -43,7 +43,8 @@ export default function GoalDetails() {
                       </PressableButton>
                     }
                  }} />
-      <Text style={warning && styles.textWarning}>Details: {goal?.text}, id:{id}</Text>
+      <Text style={warning && styles.textWarning}>Details: {goal?.text}</Text>
+                  <GoalUsers id={id} />
     </View>
   )
 }
