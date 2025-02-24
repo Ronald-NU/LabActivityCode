@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert, Pressable, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert } from 'react-native';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import { useState, useEffect } from 'react';
@@ -100,7 +100,6 @@ export default function App() {
         }}
         />
       </View>
-      
     </SafeAreaView>
   );
 }
