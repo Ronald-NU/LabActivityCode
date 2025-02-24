@@ -43,7 +43,7 @@ export default function GoalDetails() {
                       </PressableButton>
                     }
                  }} />
-      <Text style={warning && styles.textWarning}>Details: {goal?.text}, id:{id}</Text>
+      <Text style={warning && styles.textWarning}>Details: {goal?.text}</Text>
                   <GoalUsers />
     </View>
   )

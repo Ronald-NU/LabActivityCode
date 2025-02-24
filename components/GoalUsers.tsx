@@ -1,19 +1,30 @@
-import { Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { FlatList, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 
 export const GoalUsers = () => {
-
+    const [Users, setUsers] = useState([]);
     useEffect(() => {     
         const getUserGoalData =  async () => {
-            const promise = await fetch('https://jsonplaceholder.typicode.com/users');
-            console.log(await promise.json());
+            const promise = await (await fetch('https://jsonplaceholder.typicode.com/users')).json();
+            setUsers(()=>promise);
         }
         getUserGoalData();
       }, []);
-
-
     return (
-      <View>
+      <View style={{
+        padding:10,
+        justifyContent:'flex-start',
+        width:'100%'
+        }}>
+         <FlatList
+                contentContainerStyle={{alignItems:'center'}}
+                data={Users}
+                renderItem={({item, index, separators}) => 
+                    <View key={index}>
+                        <Text>{item['name']}</Text>
+                    </View>
+                }       
+           />
       </View>
     )
 }
