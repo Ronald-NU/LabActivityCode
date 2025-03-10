@@ -18,7 +18,7 @@ export default function signup() {
                 router.replace('./login');
             } catch (error) {
                 Alert.alert('Could not Register', 
-                    "Make sure to imput a valid email and password with "+ 
+                    "Make sure to input a valid email and password with "+ 
                     "at least 8 characters and 1 captial letter!");
             }
         }

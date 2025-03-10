@@ -1,4 +1,4 @@
-import { Text, StyleSheet, View, TextInput, Button } from 'react-native'
+import { Text, StyleSheet, View, TextInput, Button, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { router } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -10,8 +10,10 @@ export default function login(){
 
     const loginUser = async () => {
         try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
+            Alert.alert('Could not Login',
+                 "Make sure to input a valid email and password!");           
             console.log(error);
         }
     }
