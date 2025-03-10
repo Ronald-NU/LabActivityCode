@@ -13,6 +13,7 @@ export default function login(){
         placeholder='Enter Email Address' 
         style={styles.textInput} 
         value={email}
+        keyboardType='email-address'
         onChangeText={text => {setEmail(text)}}/>
         <Text style={styles.text}>Password</Text>
         <TextInput 
@@ -36,5 +37,5 @@ const styles = StyleSheet.create({
     textInput:{fontSize:20,color:'orange', margin:10, height:40,
       borderWidth: 1, borderRadius: 8, width: '80%', textAlign: 'center'},
       buttonContainer:{flexDirection:'row', justifyContent:'space-between'},
-    text:{fontSize:16,color:'orange', margin:2},
+    text:{fontSize:16, margin:2, width:'80%', textAlign:'left'},
 });

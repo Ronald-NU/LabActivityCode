@@ -31,6 +31,10 @@ export default function Layout() {
    }, [userLoggedIn]);
    
     return   (
-    <Stack screenOptions={{headerShown:false}}>
+    <Stack screenOptions={{ headerShown: false, animation: "fade" }}>
+        <Stack.Screen
+				 name="(auth)" options={{ animation: "slide_from_left" }} />     
+	<Stack.Screen 
+				name="(protected)" options={{ animation: "slide_from_right" }} />
     </Stack>)
 }
