@@ -10,6 +10,21 @@ export default function login(){
 
     const loginUser = async () => {
         try {
+            if(email === '' || password === ''){
+                Alert.alert('Could not Login',
+                 "Make sure to input a valid email and password!");
+                return;
+            } 
+            if(password.length < 8){
+                Alert.alert('Could not Login',
+                 "Password incorrect!");
+                return;
+            }
+            if(!email.includes('@')){
+                Alert.alert('Could not Login',
+                 "Email incorrect!");
+                return;
+            }
             await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
             Alert.alert('Could not Login',
