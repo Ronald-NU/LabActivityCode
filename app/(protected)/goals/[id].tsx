@@ -30,7 +30,7 @@ export default function GoalDetails() {
 
     const setWarningHandle = () => {
         setWarning(true);
-        updateDB(id, "goals", { text: goal ? goal?.text:"", warning: true });
+        updateDB(id, "goals", { text: goal ? goal?.text:"", warning: true});
     }
 
   return (
