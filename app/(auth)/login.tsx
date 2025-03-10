@@ -1,11 +1,20 @@
 import { Text, StyleSheet, View, TextInput, Button } from 'react-native'
 import React, { useState } from 'react'
 import { router } from 'expo-router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/Firebase/firebaseSetup';
 
 export default function login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const loginUser = async () => {
+        try {
+            const user = await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
     <View style={styles.container}>
         <Text style={styles.text}>Email Address</Text>
@@ -22,7 +31,7 @@ export default function login(){
         secureTextEntry={true}
         value={password}
         onChangeText={text => {setPassword(text)}}/>
-        <Button title="Log in" onPress={()=>{}}/>
+        <Button title="Log in" onPress={()=>{loginUser}}/>
         <Button title="New User? Create an account" onPress={() => router.replace('./signup')}/>
     </View>
     )

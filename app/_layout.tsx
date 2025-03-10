@@ -1,11 +1,12 @@
 import { auth } from "@/Firebase/firebaseSetup";
-import { router, Stack } from "expo-router";
+import { router, Stack, useSegments } from "expo-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export default function Layout() {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
-    
+    const segments = useSegments();
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -20,11 +21,11 @@ export default function Layout() {
       }, []);
 
       useEffect(() => {
-        if (userLoggedIn)
+        if (userLoggedIn && segments[0] === "(auth)")
         {
         router.replace("/(protected)/");
         }
-        else if (!userLoggedIn )      
+        else if (!userLoggedIn && segments[0] === "(protected)")      
         {
         router.replace("/(auth)/login");
         }
