@@ -33,7 +33,7 @@ export default function login(){
         secureTextEntry={true}
         value={password}
         onChangeText={text => {setPassword(text)}}/>
-        <Button title="Log in" onPress={()=>{loginUser}}/>
+        <Button title="Log in" onPress={()=>{loginUser()}}/>
         <Button title="New User? Create an account" onPress={() => router.replace('./signup')}/>
     </View>
     )

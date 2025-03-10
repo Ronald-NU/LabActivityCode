@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { router } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/Firebase/firebaseSetup';
+import { FirebaseError } from 'firebase/app';
 
 export default function signup() {
     const [email, setEmail] = useState('');
@@ -12,14 +13,28 @@ export default function signup() {
     const createUser = async () => {
         if (password === confirmpassword) {
             try {
+                if(email=="" || password=="" || confirmpassword==""){
+                    Alert.alert("Please fill out all fields");
+                    return;
+                }
+                if(password != confirmpassword){
+                    Alert.alert("Passwords do not match");
+                    return;
+                }
+                if(!email.includes("@") || !email.includes(".")){
+                    Alert.alert("Invalid Email");
+                    return;
+                }
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 console.log(user);
                 router.replace('./login');
-            } catch (error) {
-                Alert.alert('Could not Register', 
+            } catch (error: any) {
+                if(error.code == "auth/password-does-not-meet-requirements"){
+                    Alert.alert('Could not Register', 
                     "Make sure to input a valid email and password with "+ 
                     "at least 8 characters and 1 captial letter!");
+                }
             }
         }
         else {
