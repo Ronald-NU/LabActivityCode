@@ -1,5 +1,5 @@
 import { auth } from "@/Firebase/firebaseSetup";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
@@ -18,6 +18,18 @@ export default function Layout() {
           }
         })
       }, []);
+
+      useEffect(() => {
+        if (userLoggedIn)
+        {
+        router.replace("/(protected)/");
+        }
+        else if (!userLoggedIn )      
+        {
+        router.replace("/(auth)/login");
+        }
+   }, [userLoggedIn]);
+   
     return   (
     <Stack screenOptions={{headerShown:false}}>
     </Stack>)

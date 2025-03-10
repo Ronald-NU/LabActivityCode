@@ -14,23 +14,23 @@ export default function signup() {
         placeholder='Email Address' 
         style={styles.textInput} 
         value={email}
-        onChangeText={text => ()=>{setEmail(text)}}/>
+        onChangeText={text => {setEmail(text)}}/>
         <Text style={styles.text}>Password</Text>
         <TextInput 
         placeholder='Password' 
         style={styles.textInput}
         secureTextEntry={true}
         value={password}
-        onChangeText={text => ()=>{setPassword(text)}}/>
+        onChangeText={text => {setPassword(text)}}/>
          <Text style={styles.text}>Confirm Password</Text>
          <TextInput 
         placeholder='Password' 
         style={styles.textInput}
         secureTextEntry={true}
         value={confirmpassword}
-        onChangeText={text => ()=>{setConfirmPassword(text)}}/>
+        onChangeText={text => {setConfirmPassword(text)}}/>
         <Button title="Register" onPress={()=>{}}/>
-        <Button title="Already Registered? Login" onPress={() => router.push('/login')}/>
+        <Button title="Already Registered? Login" onPress={() => router.replace('./login')}/>
     </View>
     )
 }

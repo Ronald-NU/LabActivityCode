@@ -13,16 +13,16 @@ export default function login(){
         placeholder='Enter Email Address' 
         style={styles.textInput} 
         value={email}
-        onChangeText={text => ()=>{setEmail(text)}}/>
+        onChangeText={text => {setEmail(text)}}/>
         <Text style={styles.text}>Password</Text>
         <TextInput 
         placeholder='Enter Password' 
         style={styles.textInput}
         secureTextEntry={true}
         value={password}
-        onChangeText={text => ()=>{setPassword(text)}}/>
+        onChangeText={text => {setPassword(text)}}/>
         <Button title="Log in" onPress={()=>{}}/>
-        <Button title="New User? Create an account" onPress={() => router.push('/signup')}/>
+        <Button title="New User? Create an account" onPress={() => router.replace('./signup')}/>
     </View>
     )
 }
