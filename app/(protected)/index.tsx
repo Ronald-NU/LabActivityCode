@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react';
 import { GoalItem } from '@/components/GoalItem';
 import { deleteAllFromDB, deleteFromDB, writeToDB } from '@/Firebase/firestoreHelper';
 
-import { collection, onSnapshot } from 'firebase/firestore';
-import { database } from '@/Firebase/firebaseSetup';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { auth, database } from '@/Firebase/firebaseSetup';
 import { PressableButton } from '@/components/PressableButton';
 
 export interface Goal {
@@ -22,11 +22,9 @@ export default function App() {
 
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
   const appName = "Lab Activity Code";
-  //controls if the input componenet is focused on render
   const isFocusedOnRender = true;
-
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
+    const unsubscribe = onSnapshot(query(collection(database, "goals")), (querySnapshot) => {
       if(!querySnapshot.empty){
         setGoals(goals => []);
       querySnapshot.forEach((doc)=>{

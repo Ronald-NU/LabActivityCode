@@ -1,5 +1,5 @@
 import { collection, addDoc, doc, deleteDoc, getDocs, getDoc, updateDoc, setDoc } from "firebase/firestore"; 
-import { database } from "./firebaseSetup";
+import { auth, database } from "./firebaseSetup";
 
 interface goalData {
   text: string;
@@ -38,7 +38,7 @@ export interface User {
 
 export async function writeToDB(data: goalData|User, collectionName: string) {
 	try {
-	     await addDoc(collection(database,collectionName),data);
+	     await addDoc(collection(database,collectionName),{...data, owner: auth.currentUser?.uid});
 	  }
 	catch (err) {
 	    console.log(err)
