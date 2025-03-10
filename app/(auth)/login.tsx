@@ -1,24 +1,28 @@
 import { Text, StyleSheet, View, TextInput, Button } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import { router } from 'expo-router';
 
 export default function login(){
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
-    <View>
-        <Text>Email Address</Text>
+    <View style={styles.container}>
+        <Text style={styles.text}>Email Address</Text>
         <TextInput 
-        placeholder='Enter Text' 
+        placeholder='Enter Email Address' 
         style={styles.textInput} 
-        value={""}
-        onChangeText={text => ()=>{}}/>
-        <Text>Password</Text>
+        value={email}
+        onChangeText={text => ()=>{setEmail(text)}}/>
+        <Text style={styles.text}>Password</Text>
         <TextInput 
-        placeholder='Enter Text' 
+        placeholder='Enter Password' 
         style={styles.textInput}
         secureTextEntry={true}
-        value={""}
-        onChangeText={text => ()=>{}}/>
+        value={password}
+        onChangeText={text => ()=>{setPassword(text)}}/>
         <Button title="Log in" onPress={()=>{}}/>
-        <Button title="New User? Create an account" onPress={()=>{}}/>
+        <Button title="New User? Create an account" onPress={() => router.push('/signup')}/>
     </View>
     )
 }
@@ -29,7 +33,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    button:{width:'30%',margin:10},
     textInput:{fontSize:20,color:'orange', margin:10, height:40,
       borderWidth: 1, borderRadius: 8, width: '80%', textAlign: 'center'},
       buttonContainer:{flexDirection:'row', justifyContent:'space-between'},
