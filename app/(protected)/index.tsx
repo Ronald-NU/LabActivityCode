@@ -24,6 +24,7 @@ export default function App() {
   const appName = "Lab Activity Code";
   const isFocusedOnRender = true;
   useEffect(() => {
+    //add where clause to query
     const unsubscribe = onSnapshot(query(collection(database, "goals")), (querySnapshot) => {
       if(!querySnapshot.empty){
         setGoals(goals => []);
