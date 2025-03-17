@@ -1,16 +1,16 @@
-import { View, Text, Button, Alert } from 'react-native'
-import React from 'react'
+import { View, Button, Image } from 'react-native'
+import React, { useState } from 'react'
 
 import * as ImagePicker from 'expo-image-picker';
 
 export const ImageManager = () => {
     const [response, requestPermission] = ImagePicker.useCameraPermissions();
-
+    const [image, setImage] = useState<string>("");
 
 const verifyImagePermissions = async () => {
     if (response?.granted === false) {
-        await requestPermission();
-        return false;
+        const result = await requestPermission();
+        return result.granted;
     } else {
         return true;
     }
@@ -19,9 +19,11 @@ const verifyImagePermissions = async () => {
   const takeImageHandler = async () => {
     try {
     if(await verifyImagePermissions()){
-      const result = await ImagePicker.launchCameraAsync({allowsEditing: true, aspect: [16, 9], quality: 0.5});
-      console.log(result);
+      const result = await ImagePicker.launchCameraAsync({allowsEditing: true});
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);  
         }
+    }
     }
     catch (err) {
       console.log(err);
@@ -30,6 +32,7 @@ const verifyImagePermissions = async () => {
   
     return (
     <View>
+        <Image source={{ uri: image}} style={{ width: 100, height: 100 }} />
        <Button title="Take Image" onPress={()=>{takeImageHandler()}} />
     </View>
     );
