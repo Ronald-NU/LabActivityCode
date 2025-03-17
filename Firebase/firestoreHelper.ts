@@ -40,7 +40,6 @@ export interface User {
 
 export async function writeToDB(data: goalData|User, collectionName: string) {
 	try {
-      console.log(data);
 	     await addDoc(collection(database,collectionName),{...data, owner: auth.currentUser?.uid});
 	  }
 	catch (err) {

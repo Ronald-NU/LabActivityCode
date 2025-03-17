@@ -60,7 +60,6 @@ export default function App() {
       const imageRef = ref(storage, `images/${imageName}`)
       const uploadResult = await uploadBytesResumable(imageRef, blob);
       uploadURIResult = uploadResult.ref.fullPath;
-      console.log(uploadResult)
       writeToDB({...goalData, imageUri: uploadURIResult},collectionGoals)
       setIsInputVisable(false)
     } else {
