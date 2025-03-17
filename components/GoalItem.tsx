@@ -1,9 +1,9 @@
-import { Goal } from "@/app";
 import {  router } from "expo-router";
 import { Text, StyleSheet, Pressable, Alert} from 'react-native';
 import { PressableButton } from "./PressableButton";
 import React from "react";
 import { FontAwesome } from '@expo/vector-icons';
+import { Goal } from "@/app/(protected)";
 
  type GoalItemProps = {goal: Goal,
     handleOnDelete:(id:string)=>void;
@@ -11,7 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
     onPressOut:()=>void;
  };
 
-  export const GoalItem = ( {goal,handleOnDelete,onPressIn,onPressOut}: GoalItemProps ) => (
+  export const GoalItem = ( {goal, handleOnDelete,onPressIn,onPressOut}: GoalItemProps ) => (
     
     <Pressable onPressIn={onPressIn} onPressOut={onPressOut}
     onLongPress={()=>{

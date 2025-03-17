@@ -25,7 +25,10 @@ export default function App() {
   const isFocusedOnRender = true;
   useEffect(() => {
     //add where clause to query
-    const unsubscribe = onSnapshot(query(collection(database, "goals")), (querySnapshot) => {
+    if (!auth.currentUser) return;
+    const unsubscribe = onSnapshot(query(collection(database, "goals"), 
+    where("owner","==", auth.currentUser.uid)), 
+    (querySnapshot) => {
       if(!querySnapshot.empty){
         setGoals(goals => []);
       querySnapshot.forEach((doc)=>{
