@@ -4,11 +4,13 @@ import React from 'react'
 import * as ImagePicker from 'expo-image-picker';
 
 export const ImageManager = () => {
-  return (
+    const [response, requestPermission] = ImagePicker.useCameraPermissions();
+
+    return (
     <View>
-      <Button title="Take Image" onPress={takeImageHandler} />
+       <Button title="Take Image" onPress={()=>{takeImageHandler()}} />
     </View>
-  );
+    );
 }
 
 const takeImageHandler = async () => {
