@@ -4,6 +4,8 @@ import { auth, database } from "./firebaseSetup";
 interface goalData {
   text: string;
   warning?: boolean;
+  imageUri?: string;
+  owner?: string;
 }
 
 interface Geo {

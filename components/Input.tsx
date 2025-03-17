@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { TextInput, Modal, Text, Button, StyleSheet, View, Alert, Image } from 'react-native';
+import ImageManager from './ImageManager';
 
 interface InputProps {
     focusOnRender: boolean;
-    handleInputData: (data: string) => void;
+    handleInputData: (data: {text:string, imageURI:string}) => void;
     handleCancelInput: () => void;
     isVisable: boolean;
 }
@@ -16,12 +17,14 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
     const [hasTyped, setHasTyped] = useState<boolean>(false);
     const [message,setMessage] = useState<string>('');
     const [valid, setValid] = useState<boolean>(false);
+    const [image, setImage] = useState<string>("");
 
     //Function to handle confirm button press
     const handleConfirm = () => {
-        handleInputData(text)
+        handleInputData({text: text, imageURI:image})
         OnInputBlur();
         setText('')
+        setImage('');
     }
 
     //Function to handle cancel button press
@@ -64,6 +67,10 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
         setValid(!(text.length<3));
     }
 
+    const retrievedImage = (imageUri: string) => {
+        setImage(imageUri);
+    }
+
     return(
         <Modal animationType='slide' visible={isVisable} transparent={true}>
             <View style={styles.container}>
@@ -72,6 +79,9 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
                     style={styles.image} alt='Target Image with arrow bullseye'/>
                     <Image source={require('../target.png')}
                     style={styles.image} alt='Target Image with arrow bullseye'/>
+            
+            <ImageManager retrievedImage={retrievedImage}/>
+            
             <TextInput 
                 placeholder='Enter Text' 
                 style={styles.textInput} 
