@@ -10,19 +10,18 @@ interface ImageManagerProps {
 export const ImageManager =  ({retrievedImage} : ImageManagerProps) => {
 const [response, requestPermission] = ImagePicker.useCameraPermissions();
   const [image, setImage] = useState<string>("");
-const verifyImagePermissions = async () => {
-    if (response?.granted === false) {
-        const result = await requestPermission();
-        return result.granted;
-    } else {
-        return true;
-    }
+
+  const verifyImagePermissions = async () => {
+    if (response?.granted) return true;
+        
+    const result = await requestPermission();
+    return result.granted;
   }
   
   const takeImageHandler = async () => {
     try {
     if(await verifyImagePermissions()){
-      const result = await ImagePicker.launchCameraAsync({allowsEditing: true});
+      const result = await ImagePicker.launchCameraAsync({allowsEditing: true, quality:0.5});
         if (!result.canceled) {
             retrievedImage(result.assets[0].uri); 
             setImage(result.assets[0].uri); 
@@ -36,7 +35,9 @@ const verifyImagePermissions = async () => {
   
     return (
     <View>
+       {image &&
         <Image source={{ uri: image}} style={{ width: 100, height: 100 }} />
+       }
        <Button title="Take Image" onPress={()=>{takeImageHandler()}} />
     </View>
     );

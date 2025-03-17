@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Stack, useLocalSearchParams } from "expo-router";
 import { readDocFromDB, updateDB } from '@/Firebase/firestoreHelper';
@@ -6,11 +6,14 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Goal } from '../index';
 import { PressableButton } from '@/components/PressableButton';
 import GoalUsers from '@/components/GoalUsers';
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from '@/Firebase/firebaseSetup';
 
 export default function GoalDetails() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [goal, setGoal] = useState<Goal|null>(null);
     const [warning, setWarning] = useState<boolean>(false);
+    const [imageUri, setImageUri] = useState<string>("");
 
     useEffect(() => {
         const fetchGoal = async () => {
@@ -20,6 +23,11 @@ export default function GoalDetails() {
                 const data = ReadGoal?.data();
                 data.warning ? setWarning(true) : setWarning(false);
                 setGoal(goal => data as Goal);
+                if(data.imageUri){
+                const reference = ref(storage, data.imageUri);
+                const url = await getDownloadURL(reference);
+                setImageUri(url);
+                }
                }
             } catch (err) {
                 console.log(err);
@@ -44,7 +52,11 @@ export default function GoalDetails() {
                     }
                  }} />
       <Text style={warning && styles.textWarning}>Details: {goal?.text}</Text>
+      {imageUri &&
+      <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} /> 
+        }
                   <GoalUsers id={id} />
+
     </View>
   )
 }

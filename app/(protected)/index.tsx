@@ -7,8 +7,9 @@ import { GoalItem } from '@/components/GoalItem';
 import { deleteAllFromDB, deleteFromDB, writeToDB } from '@/Firebase/firestoreHelper';
 
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { auth, database } from '@/Firebase/firebaseSetup';
+import { auth, database, storage } from '@/Firebase/firebaseSetup';
 import { PressableButton } from '@/components/PressableButton';
+import { ref, uploadBytesResumable } from 'firebase/storage';
 
 export interface Goal {
   text: string;
@@ -46,14 +47,28 @@ export default function App() {
   
 
   //Function to handle input data from the input component and hide modal
-  const handleInputData = (data: {text:string, imageURI:string}) => {
+  const handleInputData = async (data: {text:string, imageURI:string}) => {
     const goalData = {
       text: data.text
     }
-    writeToDB(goalData,collectionGoals)
-  
-    setIsInputVisable(false)
+    var uploadURIResult;
+    if(data.imageURI?.length>0){
+      const response = await fetch(data.imageURI);
+      const blob = await response.blob();
+
+      const imageName = data.imageURI.substring(data.imageURI.lastIndexOf('/') + 1);
+      const imageRef = ref(storage, `images/${imageName}`)
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      uploadURIResult = uploadResult.ref.fullPath;
+      console.log(uploadResult)
+      writeToDB({...goalData, imageUri: uploadURIResult},collectionGoals)
+      setIsInputVisable(false)
+    } else {
+      writeToDB(goalData, collectionGoals)
+      setIsInputVisable(false)
+    }
   }
+
   const handleCancelInput = () => {
     setIsInputVisable(false)
   }
@@ -84,7 +99,7 @@ export default function App() {
       </View>
       </View>
 
-      <View style={styles.bottomSection}>
+       <View style={styles.bottomSection}>
         <FlatList
         contentContainerStyle={{alignItems:'center'}}
         data={goals}
