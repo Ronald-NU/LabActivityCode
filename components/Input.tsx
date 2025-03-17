@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { TextInput, Modal, Text, Button, StyleSheet, View, Alert, Image } from 'react-native';
+import ImageManager from './ImageManager';
 
 interface InputProps {
     focusOnRender: boolean;
@@ -72,6 +73,9 @@ const Input = ({focusOnRender, handleCancelInput, handleInputData, isVisable}: I
                     style={styles.image} alt='Target Image with arrow bullseye'/>
                     <Image source={require('../target.png')}
                     style={styles.image} alt='Target Image with arrow bullseye'/>
+            
+            <ImageManager />
+            
             <TextInput 
                 placeholder='Enter Text' 
                 style={styles.textInput} 
