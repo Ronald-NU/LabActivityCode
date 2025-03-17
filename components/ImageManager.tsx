@@ -3,10 +3,13 @@ import React, { useState } from 'react'
 
 import * as ImagePicker from 'expo-image-picker';
 
-export const ImageManager = () => {
-    const [response, requestPermission] = ImagePicker.useCameraPermissions();
-    const [image, setImage] = useState<string>("");
+interface ImageManagerProps {
+    retrievedImage: (imageUri: string) => void;
+}
 
+export const ImageManager =  ({retrievedImage} : ImageManagerProps) => {
+const [response, requestPermission] = ImagePicker.useCameraPermissions();
+  const [image, setImage] = useState<string>("");
 const verifyImagePermissions = async () => {
     if (response?.granted === false) {
         const result = await requestPermission();
@@ -21,7 +24,8 @@ const verifyImagePermissions = async () => {
     if(await verifyImagePermissions()){
       const result = await ImagePicker.launchCameraAsync({allowsEditing: true});
         if (!result.canceled) {
-            setImage(result.assets[0].uri);  
+            retrievedImage(result.assets[0].uri); 
+            setImage(result.assets[0].uri); 
         }
     }
     }

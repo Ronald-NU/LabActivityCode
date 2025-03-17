@@ -46,9 +46,9 @@ export default function App() {
   
 
   //Function to handle input data from the input component and hide modal
-  const handleInputData = (data: string) => {
+  const handleInputData = (data: {text:string, imageURI:string}) => {
     const goalData = {
-      text: data
+      text: data.text
     }
     writeToDB(goalData,collectionGoals)
   
