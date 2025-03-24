@@ -112,6 +112,26 @@ export async function getCollectionFromDB(collectionName: string) {
 }
 
 export async function setUserLocation(collectionName:string, id:string, location:LatLng){
+  try { 
   const docRef = doc(database,collectionName,id);
   await setDoc(docRef,location,{merge:true});
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export async function getUserLocation(collectionName:string, id:string){
+  try { 
+    const docRef = doc(database,collectionName,id);
+    const UserDoc = await getDoc(docRef);
+    if(UserDoc.exists()){
+    return UserDoc.data();
+    }else{
+      return null;
+    }
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
