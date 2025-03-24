@@ -1,7 +1,7 @@
 import { View, Button, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Location from 'expo-location';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
 type location = {
     latitude:number,
@@ -9,8 +9,18 @@ type location = {
 }
 
 const LocationManager = () => {
+    const {latitude, longitude} = useLocalSearchParams();
     const [response, requestPermission] = Location.useForegroundPermissions();
     const [mylocation, setLocation] = useState<location>();
+
+    useEffect(()=>{
+        if(latitude&&longitude){
+        setLocation({
+            latitude: Number.parseFloat(latitude as string),
+            longitude: Number.parseFloat(longitude as string),
+        })
+        }
+    },[latitude,longitude])
 
     const mapsApiKey = {
         key: process.env.EXPO_GOOGLE_STATIC_MAP_API_KEY
