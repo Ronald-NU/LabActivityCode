@@ -1,5 +1,6 @@
 import { collection, addDoc, doc, deleteDoc, getDocs, getDoc, updateDoc, setDoc } from "firebase/firestore"; 
 import { auth, database } from "./firebaseSetup";
+import { LatLng } from "react-native-maps";
 
 interface goalData {
   text: string;
@@ -108,4 +109,9 @@ export async function getCollectionFromDB(collectionName: string) {
   catch (err) {
     console.log(err)
   }
+}
+
+export async function setUserLocation(collectionName:string, id:string, location:LatLng){
+  const docRef = doc(database,collectionName,id);
+  await setDoc(docRef,location,{merge:true});
 }
