@@ -17,10 +17,10 @@ export type Region = {
 
 export default function map() {
     const {latitude, longitude} = useLocalSearchParams()
-    const [markerLoc, setMarkerLoc] = useState<LatLng>({ latitude: 0, longitude: 0 })
+    const [markerLoc, setMarkerLoc] = useState<LatLng>()
 
     const goToProfile = () => {
-        router.replace(`profile?latitude=${markerLoc.latitude}&longitude=${markerLoc.longitude}`)
+        router.replace(`profile?latitude=${markerLoc?.latitude}&longitude=${markerLoc?.longitude}`)
     }
   return (
     <SafeAreaView style={{flex:1}}>
@@ -29,9 +29,11 @@ export default function map() {
         longitude: Number.parseFloat(longitude as string),
         longitudeDelta:0.05,
         latitudeDelta:0.05}} onPress={(event)=>{setMarkerLoc(event.nativeEvent.coordinate)}}>
-            <Marker coordinate={markerLoc}/>
+            {
+             markerLoc?<Marker coordinate={markerLoc}/>:null
+            }
     </MapView>
-    <Button title="Confirm Selected Location"  onPress={goToProfile}/>
+    <Button disabled={markerLoc?false:true} title="Confirm Selected Location"  onPress={goToProfile}/>
     </SafeAreaView>
   )
 }
