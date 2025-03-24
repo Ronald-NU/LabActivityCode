@@ -2,7 +2,6 @@ import { View, Button, Image } from 'react-native'
 import React, { useState } from 'react'
 import * as Location from 'expo-location';
 import { router } from 'expo-router';
-import { Region } from '@/app/(protected)/map';
 
 type location = {
     latitude:number,
@@ -41,7 +40,7 @@ const LocationManager = () => {
       }
 
       const goToMap = () => {
-        router.navigate(`map?location=${mylocation}`)
+        router.navigate(`map?latitude=${mylocation?.latitude}&longitude=${mylocation?.longitude}`)
       }
 
   return (

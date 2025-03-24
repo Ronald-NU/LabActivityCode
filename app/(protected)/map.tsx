@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { useLocalSearchParams } from 'expo-router';
 
 export type Region = {
@@ -11,11 +11,13 @@ export type Region = {
   }
 
 export default function map() {
-    const {location} = useLocalSearchParams()
-    
+    const {latitude, longitude} = useLocalSearchParams()
   return (
-    <MapView style={{flex:1}}>
-
+    <MapView style={{flex:1}} initialRegion={{
+        latitude: Number.parseFloat(latitude as string),
+        longitude: Number.parseFloat(longitude as string),
+        longitudeDelta:0.05,
+        latitudeDelta:0.05}}>
     </MapView>
   )
 }
