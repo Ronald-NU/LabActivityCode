@@ -17,15 +17,6 @@ const LocationManager = () => {
     const [mylocation, setLocation] = useState<location>();
 
     useEffect(()=>{
-        if(latitude&&longitude){
-        setLocation({
-            latitude: Number.parseFloat(latitude as string),
-            longitude: Number.parseFloat(longitude as string),
-        })
-        }
-    },[latitude,longitude])
-
-    useEffect(()=>{
         const getUserLoc = async () => {
         if (auth?.currentUser?.uid) {
         const user = await getUserLocation('users',auth.currentUser?.uid);
@@ -34,8 +25,19 @@ const LocationManager = () => {
         }
         }
         }
-        getUserLoc();
+        if (!latitude || !longitude) {
+            getUserLoc();
+        }
     },[])
+
+    useEffect(()=>{
+        if(latitude&&longitude){
+        setLocation({
+            latitude: Number.parseFloat(latitude as string),
+            longitude: Number.parseFloat(longitude as string),
+        })
+        }
+    },[latitude,longitude])
 
     const mapsApiKey = {
         key: process.env.EXPO_PUBLIC_GOOGLE_STATIC_MAP_API_KEY
