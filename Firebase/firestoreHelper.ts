@@ -1,5 +1,6 @@
 import { collection, addDoc, doc, deleteDoc, getDocs, getDoc, updateDoc, setDoc } from "firebase/firestore"; 
 import { auth, database } from "./firebaseSetup";
+import { LatLng } from "react-native-maps";
 
 interface goalData {
   text: string;
@@ -101,6 +102,31 @@ export async function getCollectionFromDB(collectionName: string) {
       var Data : any[] = []
       querySnapshot.docs.forEach((value)=>Data.push(value.data()))
     return Data;
+    }else{
+      return null;
+    }
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export async function setUserLocation(collectionName:string, id:string, location:LatLng){
+  try { 
+  const docRef = doc(database,collectionName,id);
+  await setDoc(docRef,location,{merge:true});
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export async function getUserLocation(collectionName:string, id:string){
+  try { 
+    const docRef = doc(database,collectionName,id);
+    const UserDoc = await getDoc(docRef);
+    if(UserDoc.exists()){
+    return UserDoc.data();
     }else{
       return null;
     }
