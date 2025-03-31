@@ -21,10 +21,10 @@ const scheduleNotificationHandler = async () => {
     if(await verifyPermissions()){
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Reminder",
-        body: "This is your scheduled notification.",
+        title: "Daily Goals Reminder",
+        body: "Set your Daily GOALS!",
       },
-      trigger: {type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 10, repeats: false },
+      trigger: {type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 10 },
     });
     }
   }
@@ -35,7 +35,7 @@ const scheduleNotificationHandler = async () => {
 
 return (
     <View style={{justifyContent:'center', alignItems:'center'}}>
-      <Button title='Set A Reminder' onPress={scheduleNotificationHandler}/>
+      <Button title='Set A Daily Reminder' onPress={scheduleNotificationHandler}/>
     </View>
   )
 }
