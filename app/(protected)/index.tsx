@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert, Platform } from 'react-native';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import { useState, useEffect } from 'react';
@@ -12,14 +12,14 @@ import { PressableButton } from '@/components/PressableButton';
 import { ref, uploadBytesResumable } from 'firebase/storage';
 import * as Notifications from "expo-notifications";
 
+import Constants from "expo-constants";
+import { verifyPermissions } from '@/components/NotificationManager';
+
 export interface Goal {
   text: string;
   id: string;
   warning?:boolean;
 }
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false })
-});
 
 export default function App() {
   const collectionGoals = 'goals';
@@ -28,6 +28,29 @@ export default function App() {
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
   const appName = "Lab Activity Code";
   const isFocusedOnRender = true;
+
+  useEffect(()=>{
+    const NotificationSetup = async () => {
+      if(await verifyPermissions()){
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+    });
+  }
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false })
+  });
+  
+  Notifications.getExpoPushTokenAsync({
+    projectId: Constants.expoConfig?.extra?.eas?.projectId,
+  });
+}
+}
+NotificationSetup()
+  },[])
+
+  
 
   useEffect(() => {
     const subscription = Notifications.addNotificationReceivedListener((notification) => {
