@@ -29,6 +29,19 @@ export default function App() {
   const appName = "Lab Activity Code";
   const isFocusedOnRender = true;
 
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener((notification) => {
+      console.log("Notification received:", notification);
+      })
+    return () => subscription.remove();
+  }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener((notification) => {
+      console.log("Notification Response Received:", notification);
+      });
+    return () => subscription.remove();
+  }, []);
   
 
   useEffect(() => {
