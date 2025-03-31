@@ -1,12 +1,11 @@
 import * as Notifications from "expo-notifications";
-import { Button, View } from "react-native";
+import { Alert, Button, View } from "react-native";
 
 export  const verifyPermissions = async () => {
     const settings = await Notifications.getPermissionsAsync();
-    settings.granted
     if(settings.granted)
     {
-        return settings.granted;
+      return settings.granted;
     } else {
         const status = await Notifications.requestPermissionsAsync();
         return status.granted;
@@ -26,6 +25,8 @@ const scheduleNotificationHandler = async () => {
       },
       trigger: {type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 10 },
     });
+    } else {
+      Alert.alert("Need Permissions", "To use Notifications go to Settings and allow Notifications!")
     }
   }
   catch (err) {
