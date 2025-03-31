@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert, Platform } from 'react-native';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoalItem } from '@/components/GoalItem';
 import { deleteAllFromDB, deleteFromDB, writeToDB } from '@/Firebase/firestoreHelper';
 
@@ -28,6 +28,7 @@ export default function App() {
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
   const appName = "Lab Activity Code";
   const isFocusedOnRender = true;
+  const [pushToken, setPushToken] = useState<string | undefined>();
 
   useEffect(()=>{
     const NotificationSetup = async () => {
@@ -42,9 +43,10 @@ export default function App() {
     handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false })
   });
   
-  Notifications.getExpoPushTokenAsync({
+  const token = await Notifications.getExpoPushTokenAsync({
     projectId: Constants.expoConfig?.extra?.eas?.projectId,
   });
+  setPushToken(token.data);
 }
 }
 NotificationSetup()
@@ -128,6 +130,21 @@ NotificationSetup()
             ])
   }
 
+  const PushNotification = async () => {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        to: pushToken,
+        title: "Push Notification",
+        body: "This is a push notification",
+      })
+    })
+  }
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -140,6 +157,7 @@ NotificationSetup()
           </PressableButton>
       </View>
       </View>
+      <Button title="Send Push" onPress={PushNotification} />
 
        <View style={styles.bottomSection}>
         <FlatList
