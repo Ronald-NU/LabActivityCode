@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert } from 'react-native';
+import { StyleSheet, View, Text, Button, SafeAreaView, FlatList,Alert, Platform } from 'react-native';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoalItem } from '@/components/GoalItem';
 import { deleteAllFromDB, deleteFromDB, writeToDB } from '@/Firebase/firestoreHelper';
 
@@ -10,6 +10,10 @@ import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { auth, database, storage } from '@/Firebase/firebaseSetup';
 import { PressableButton } from '@/components/PressableButton';
 import { ref, uploadBytesResumable } from 'firebase/storage';
+import * as Notifications from "expo-notifications";
+
+import Constants from "expo-constants";
+import { verifyPermissions } from '@/components/NotificationManager';
 
 export interface Goal {
   text: string;
@@ -24,6 +28,47 @@ export default function App() {
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
   const appName = "Lab Activity Code";
   const isFocusedOnRender = true;
+  const [pushToken, setPushToken] = useState<string | undefined>();
+
+  useEffect(()=>{
+    const NotificationSetup = async () => {
+      if(await verifyPermissions()){
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+    });
+  }
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false })
+  });
+  
+  const token = await Notifications.getExpoPushTokenAsync({
+    projectId: Constants.expoConfig?.extra?.eas?.projectId,
+  });
+  setPushToken(token.data);
+}
+}
+NotificationSetup()
+  },[])
+
+  
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener((notification) => {
+      console.log("Notification received:", notification);
+      })
+    return () => subscription.remove();
+  }, []);
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener((notification) => {
+      console.log("Notification Response Received:", notification);
+      });
+    return () => subscription.remove();
+  }, []);
+  
+
   useEffect(() => {
     //add where clause to query
     if (!auth.currentUser) return;
@@ -85,6 +130,21 @@ export default function App() {
             ])
   }
 
+  const PushNotification = async () => {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        to: pushToken,
+        title: "Push Notification",
+        body: "This is a push notification",
+      })
+    })
+  }
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -97,6 +157,7 @@ export default function App() {
           </PressableButton>
       </View>
       </View>
+      <Button title="Send Push" onPress={PushNotification} />
 
        <View style={styles.bottomSection}>
         <FlatList

@@ -14,13 +14,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.code4u.LabActivityCode"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.code4u.LabActivityCode"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +38,14 @@
           "cameraPermission": "The app needs access to your camera."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2428e828-e6ee-4b14-8335-87f9a16e088e"
+      }
+    }
   }
 }
