@@ -10,12 +10,16 @@ import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { auth, database, storage } from '@/Firebase/firebaseSetup';
 import { PressableButton } from '@/components/PressableButton';
 import { ref, uploadBytesResumable } from 'firebase/storage';
+import * as Notifications from "expo-notifications";
 
 export interface Goal {
   text: string;
   id: string;
   warning?:boolean;
 }
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false })
+});
 
 export default function App() {
   const collectionGoals = 'goals';
@@ -24,6 +28,9 @@ export default function App() {
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
   const appName = "Lab Activity Code";
   const isFocusedOnRender = true;
+
+  
+
   useEffect(() => {
     //add where clause to query
     if (!auth.currentUser) return;

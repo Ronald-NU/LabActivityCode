@@ -6,8 +6,8 @@ const NotificationManager = () => {
 
     const verifyPermissions = async () => {
         const settings = await Notifications.getPermissionsAsync();
-        settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-        if(settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL )
+        settings.granted
+        if(settings.granted)
         {
             return settings.granted;
         } else {
