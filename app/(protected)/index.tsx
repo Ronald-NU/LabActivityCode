@@ -14,6 +14,7 @@ import * as Notifications from "expo-notifications";
 
 import Constants from "expo-constants";
 import { verifyPermissions } from '@/components/NotificationManager';
+import { useRouter } from 'expo-router';
 
 export interface Goal {
   text: string;
@@ -24,6 +25,7 @@ export interface Goal {
 export default function App() {
   const collectionGoals = 'goals';
   const [goals, setGoals] = useState<Goal[]>([]);
+  const router = useRouter();
 
   const [isInputVisable, setIsInputVisable] = useState<boolean>(false);
   const appName = "Lab Activity Code";
@@ -46,6 +48,7 @@ export default function App() {
   const token = await Notifications.getExpoPushTokenAsync({
     projectId: Constants.expoConfig?.extra?.eas?.projectId,
   });
+  console.log(token.data);
   setPushToken(token.data);
 }
 }
@@ -63,7 +66,8 @@ NotificationSetup()
 
   useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener((notification) => {
-      console.log("Notification Response Received:", notification);
+      console.log("Notification Response Received:", notification.notification.request.content.data.url);
+      router.dismissTo("./");
       });
     return () => subscription.remove();
   }, []);
@@ -137,7 +141,9 @@ NotificationSetup()
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        to: pushToken,
+        //hardcoded token for testing
+        //to: pushToken,
+        to: 'ExponentPushToken[9drammNtio8_ptxCxi-jTD]',
         title: "Push Notification",
         body: "This is a push notification",
       })
