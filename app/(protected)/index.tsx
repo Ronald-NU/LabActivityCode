@@ -48,6 +48,7 @@ export default function App() {
   const token = await Notifications.getExpoPushTokenAsync({
     projectId: Constants.expoConfig?.extra?.eas?.projectId,
   });
+  console.log(token.data);
   setPushToken(token.data);
 }
 }
@@ -140,7 +141,9 @@ NotificationSetup()
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        to: pushToken,
+        //hardcoded token for testing
+        //to: pushToken,
+        to: 'ExponentPushToken[9drammNtio8_ptxCxi-jTD]',
         title: "Push Notification",
         body: "This is a push notification",
       })
