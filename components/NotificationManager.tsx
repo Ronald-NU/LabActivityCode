@@ -22,6 +22,8 @@ const scheduleNotificationHandler = async () => {
       content: {
         title: "Daily Goals Reminder",
         body: "Set your Daily GOALS!",
+        data: { url: "https://www.google.com" },
+        sound: "default",
       },
       trigger: {type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 10 },
     });
@@ -36,7 +38,7 @@ const scheduleNotificationHandler = async () => {
 
 return (
     <View style={{justifyContent:'center', alignItems:'center'}}>
-      <Button title='Set A Daily Reminder' onPress={scheduleNotificationHandler}/>
+      <Button title='Set A Daily Reminder' onPress={()=>scheduleNotificationHandler()}/>
     </View>
   )
 }
